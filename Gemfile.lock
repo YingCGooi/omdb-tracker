@@ -1,0 +1,39 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    backports (3.11.4)
+    multi_json (1.13.1)
+    pg (0.18.4)
+    puma (3.12.0)
+    rack (1.6.11)
+    rack-protection (1.5.5)
+      rack
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
+    sinatra (1.4.8)
+      rack (~> 1.5)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
+    sinatra-contrib (1.4.7)
+      backports (>= 2.0)
+      multi_json
+      rack-protection
+      rack-test
+      sinatra (~> 1.4.0)
+      tilt (>= 1.3, < 3)
+    tilt (2.0.9)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  pg (~> 0.18.4)
+  puma
+  sinatra (~> 1.4.7)
+  sinatra-contrib
+
+RUBY VERSION
+   ruby 2.4.1p111
+
+BUNDLED WITH
+   1.17.2
