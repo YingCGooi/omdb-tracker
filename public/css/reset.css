@@ -46,6 +46,10 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+input,
+button {
+  font-family: inherit;
+}
 *,
 *:before,
 *:after {
