@@ -25,7 +25,6 @@ class Favorite
     return false if @errors
 
     @errors = []
-
     columns = movie.keys
     values = movie.values
 
