@@ -19,7 +19,7 @@ const MovieItem = ({ movie, isFavorite, handleFavoriteButtonClicked }) => (
         (isFavorite) 
           ? <FavoriteInfo 
               rating={ movie.rating } 
-              comments={ movie.comments } 
+              comment={ movie.comment } 
               imdbId={ movie.imdbID }
             />
           : <button 
