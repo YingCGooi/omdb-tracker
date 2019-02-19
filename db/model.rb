@@ -59,10 +59,11 @@ class Favorite
       'Movie must have a comment': m['comment'].nil? || m['comment'].strip.empty?,
       'Comment must not exceed 128 characters': m['comment'] && m['comment'].length > 128
     }
+
     errors = errors.select { |_, condition| condition }
     return errors.keys if !errors.empty?
     return false
-  end  
+  end
 
   def query(statement, *params)
     @logger.info "#{statement}: #{params}"

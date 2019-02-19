@@ -35,9 +35,9 @@ namespace '/api' do
     end
   end
 
-  documentation ''
+  documentation 'Retrieve all favorite movies'
   get '/favorites' do
-
+    json @favorite.all
   end
 
   documentation 'Saves a movie as favorite' do
