@@ -4,6 +4,8 @@ ruby '2.4.1'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'pg'
+gem 'sinatra-docdsl'
+gem 'rack-contrib'
 
 group :production do
   gem 'puma'
