@@ -27,12 +27,6 @@ namespace '/api' do
       movie_params = [:title, :year, :plot, :poster, :imdbID, :rating, :comment]
       params.select { |key, _| movie_params.include?(key.to_sym) }
     end
-
-    def format_years!(movie)
-      years = movie['year'].split(/–|-/)
-      movie['year'] = years[0]
-      movie['endYear'] = years[1]
-    end
   end
 
   documentation 'Retrieve all favorite movies'
@@ -56,7 +50,6 @@ namespace '/api' do
   end
   post '/favorites' do
     movie = extract_movie_params
-    format_years!(movie)
     
     if @favorite.save(movie)
       status 201
