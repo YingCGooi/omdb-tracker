@@ -21,6 +21,7 @@ class Favorite
   end
 
   def save(movie)
+    format_years!(movie)
     @errors = errors_for_movie(movie)
     return false if @errors
 
@@ -39,15 +40,26 @@ class Favorite
   end
 
   def all
-    
+    sql = 'SELECT * FROM favorites'
+    result = query(sql)
+    result.map do |tuple|
+      to_movie_hash(tuple)
+    end
   end
 
   private
 
   def bind_params(columns)
-    columns.map.with_index(1) { |_, i| "$#{i}" }
+    columns.map
+           .with_index(1) { |_, i| "$#{i}" }
            .join(', ')
   end
+
+  def format_years!(movie)
+    years = movie['year'].split(/–|-/)
+    movie['year'] = years[0]
+    movie['endYear'] = years[1]
+  end  
 
   def errors_for_movie(m)
     errors = {
@@ -63,6 +75,21 @@ class Favorite
     errors = errors.select { |_, condition| condition }
     return errors.keys if !errors.empty?
     return false
+  end
+
+  def to_movie_hash(tuple)
+    tuple['year'] += "–#{tuple['endyear']}" if tuple['endyear']
+
+    {
+      tuple['imdbid'] => {
+        title: tuple['title'],
+        year: tuple['year'],
+        plot: tuple['plot'],
+        poster: tuple['poster'],
+        rating: tuple['rating'].to_i,
+        comment: tuple['comment']
+      }
+    }
   end
 
   def query(statement, *params)
