@@ -1,5 +1,5 @@
 require 'sinatra'
-require_relative 'database_persistence'
+require_relative 'db/favorites.rb'
 
 configure(:development) do
   require 'sinatra/reloader'
