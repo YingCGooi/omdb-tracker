@@ -40,11 +40,15 @@ class Favorite
   end
 
   def all
+    favorites = {}
     sql = 'SELECT * FROM favorites'
     result = query(sql)
-    result.map do |tuple|
-      to_movie_hash(tuple)
+
+    result.each do |tuple|
+      favorites[tuple['imdbid']] = to_movie_hash(tuple)
     end
+
+    favorites
   end
 
   private
@@ -74,21 +78,19 @@ class Favorite
 
     errors = errors.select { |_, condition| condition }
     return errors.keys if !errors.empty?
-    return false
+    false
   end
 
   def to_movie_hash(tuple)
     tuple['year'] += "–#{tuple['endyear']}" if tuple['endyear']
 
     {
-      tuple['imdbid'] => {
-        title: tuple['title'],
-        year: tuple['year'],
-        plot: tuple['plot'],
-        poster: tuple['poster'],
-        rating: tuple['rating'].to_i,
-        comment: tuple['comment']
-      }
+      title: tuple['title'],
+      year: tuple['year'],
+      plot: tuple['plot'],
+      poster: tuple['poster'],
+      rating: tuple['rating'].to_i,
+      comment: tuple['comment']
     }
   end
 
