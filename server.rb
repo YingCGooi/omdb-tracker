@@ -41,6 +41,7 @@ namespace '/api' do
 
   documentation 'Retrieve all favorite movies'
   get '/favorites' do
+    status 200
     json @favorite.all
   end
 
@@ -65,6 +66,29 @@ namespace '/api' do
     if @favorite.save!(movie)
       status 201
       json(to_favorite_hash(movie))
+    else
+      status 400
+      json({ errors: @favorite.errors })
+    end
+  end
+
+
+  documentation 'Updates a favorite movie rating.' do
+    payload 'Request payload is a json with a single rating attribute',
+    {
+      rating: 'Number : between 0-5'
+    }
+    response 'JSON: the updated favorite movie'
+    status 200, 'rating is updated'
+    status 400, 'when rating cannot be updated or incorrect format in request payload. response: { error: ["Rating must be an integer between 0-5"] }'
+  end
+  patch '/favorites/:imdbID' do
+    imdbID = params['imdbID']
+    rating = params['rating']
+
+    if @favorite.update_rating!(imdbID, rating)
+      status 200
+      json @favorite.find_by({ imdbID: imdbID })
     else
       status 400
       json({ errors: @favorite.errors })
