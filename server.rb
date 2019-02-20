@@ -60,7 +60,7 @@ namespace '/api' do
   end
 
 
-  documentation 'Saves a movie as favorite' do
+  documentation 'Saves a movie into the favorites list' do
     payload 'Request payload has to be json', {
       'title': 'String (required) : At least one character long.',
       'year': 'String : Format yyyy or yyyy-yyyy. If format is yyyy-yyyy, save ending year in endyear column. Not saved if format is incorrect',
