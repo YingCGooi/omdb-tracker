@@ -20,7 +20,8 @@ class Favorite
     @db.close
   end
 
-  def save(movie)
+  def save!(movie)
+    movie = movie.dup
     format_years!(movie)
     @errors = errors_for_movie(movie)
     return false if @errors
@@ -60,25 +61,10 @@ class Favorite
   end
 
   def format_years!(movie)
+    return if movie['year'].nil?
     years = movie['year'].split(/–|-/)
     movie['year'] = years[0]
-    movie['endYear'] = years[1]
-  end  
-
-  def errors_for_movie(m)
-    errors = {
-      'Movie must have a title': m['title'].strip.empty?,
-      'Movie must have a valid year': !m['year'].match(/^\d{4}$/),
-      'Movie must have a valid ending year': m['endYear'] && !m['endYear'].match(/^\d{4}$/),
-      'Movie must have a rating of 0-5': !(0..5).include?(m['rating']),
-      'Movie must have a valid IMDB ID': !m['imdbID'].length.between?(9, 10),
-      'Movie must have a comment': m['comment'].nil? || m['comment'].strip.empty?,
-      'Comment must not exceed 128 characters': m['comment'] && m['comment'].length > 128
-    }
-
-    errors = errors.select { |_, condition| condition }
-    return errors.keys if !errors.empty?
-    false
+    movie['endYear'] = years[1] if years[1]
   end
 
   def to_movie_hash(tuple)
@@ -95,7 +81,52 @@ class Favorite
   end
 
   def query(statement, *params)
-    @logger.info "#{statement}: #{params}"
+    @logger.info "\u001b[33;1m#{statement}: \u001b[32m#{params} \u001b[0m"
     @db.exec_params(statement, params)
   end
+
+  def title_present?(title)
+    title && !title.strip.empty?
+  end
+
+  def valid_year?(year)
+    year && year.match(/^\d{4}$/)
+  end
+
+  def valid_end_year?(end_year)
+    return end_year.match(/^\d{4}$/) if end_year
+    true
+  end
+
+  def valid_rating?(rating)
+    rating && (0..5).include?(rating)
+  end
+
+  def valid_imdb_id?(imdbID)
+    imdbID && imdbID.length.between?(9, 10)
+  end
+
+  def valid_comment?(comment)
+    comment && comment.length <= 128 && !comment.strip.empty?
+  end
+
+  def valid_poster?(poster)
+    poster && (poster == 'N/A' || poster.match(/^https?:\/\//))
+  end
+
+  def errors_for_movie(m)
+    validations = {
+      'Movie must have a title': title_present?(m['title']),
+      'Movie must have a valid year': valid_year?(m['year']),
+      'Movie must have a valid ending year': valid_end_year?(m['endYear']),
+      'Movie must have a rating of 0-5': valid_rating?(m['rating']),
+      'Movie must have a poster image URL or "N/A"': valid_poster?(m['poster']),
+      'Movie must have a valid IMDB ID': valid_imdb_id?(m['imdbID']),
+      'Movie must have a short comment (<=128 chars)': valid_comment?(m['comment'])
+    }
+
+    errors = validations.select { |_, condition| !condition }
+    return errors.keys if !errors.empty?
+    false
+  end  
 end
