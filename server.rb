@@ -2,14 +2,16 @@ require 'sinatra'
 require 'sinatra/contrib'
 require 'rack/contrib'
 require 'docdsl'
-require_relative 'db/Favorite.rb'
+require_relative 'db/favorite.rb'
+require_relative 'omdb_client.rb'
 
 register Sinatra::DocDsl
 use Rack::PostBodyContentTypeParser
 
 configure(:development) do
   require 'sinatra/reloader'
-  also_reload 'db/model.rb'
+  also_reload 'db/favorite.rb'
+  also_reload 'omdb_client.rb'  
   also_reload 'public/index.html'
 end
 
@@ -32,16 +34,61 @@ namespace '/api' do
       params.select { |key, _| movie_params.include?(key.to_sym) }
     end
 
-    def to_favorite_hash(movie)
+    def to_favorite_object(movie)
       imdbID = movie['imdbID']
       movie.delete('imdbID')
       { imdbID => movie }
     end
+
+    def absent?(value)
+      value.nil? || value.strip.empty?
+    end
+
+    def to_movie_object(data)
+      {
+        'title' => data['Title'],
+        'year' => data['Year'],
+        'plot' => data['Plot'],
+        'poster' => data['Poster'],
+        'imdbID' => data['imdbID']
+      }
+    end
   end
 
+  documentation 'Search for a movie by title' do
+    param :title, "movie+title or movie%20title"
+    response 'json. A movie object', {
+      "title": "Spider Man",
+      "year": "1978–1979",
+      "plot": "To fight against the evil Iron Cross Army, led by the space emperor Professor Monster, a daredevil motorcyclist transforms into the famous Marvel Superhero, with a racecar and giant ...",
+      "poster": "https://m.media-amazon.com/images/M/MV5BM2EwYzA2YjMtNDdhYi00OTI1LWE2ODUtOWViODk4YjRjNzVmXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
+      "imdbID": "tt0185116",
+    }
+    status 400, 'When title is blank'
+    status 404, 'When movie is not found on OMDb'
+    status 500, 'When server API key is invalid or server is having connection issues with OMDb'
+    status 200, 'Successful response'
+  end
+  get '/search' do
+    title = params['title']
+    client = OmdbClient.new
+
+    halt 400, 'title cannot be blank' if absent?(title)
+
+    begin
+      data = client.query(title)
+      json to_movie_object(data)
+
+    rescue MovieNotFound
+      halt 404, "Movie not found on OMDb."
+
+    rescue InvalidAPIKey, Faraday::ConnectionFailed
+      halt 500, 'The server is experiencing issues communicating with OMDb.'
+    end
+  end
 
   documentation 'Retrieve all favorite movies' do
-    response 'json. An object with imdbIDs as key and corresponding favorited movies as values', {
+    response 'json. An object with imdbIDs as key and corresponding favorite movies as values', {
       'tt12345678': {
         "title": "Spider Man",
         "year": "1978",
@@ -56,7 +103,6 @@ namespace '/api' do
     status 200
   end
   get '/favorites' do
-    status 200
     json @favorite.all
   end
 
@@ -80,7 +126,7 @@ namespace '/api' do
     
     if @favorite.save!(movie)
       status 201
-      json to_favorite_hash(movie)
+      json to_favorite_object(movie)
     else
       status 400
       json({ 
@@ -112,13 +158,9 @@ namespace '/api' do
     if @favorite.update_rating!(imdbID, rating)
       status 200
       movie['rating'] = rating
-      json to_favorite_hash(movie)
+      json to_favorite_object(movie)
     else
-      status 400
-      json({ 
-        error: 'Rating must be a number in 0 to 5.', 
-        message: 'Cannot update rating.'
-      })
+      halt 400, 'Cannot update rating. Rating must be a number in 0 to 5.'
     end
   end
 
