@@ -17,6 +17,10 @@ before do
   @favorite = Favorite.new(logger)
 end
 
+after do
+  @favorite.disconnect
+end
+
 get '/' do
   send_file 'public/index.html', type: :html
 end
@@ -27,12 +31,19 @@ namespace '/api' do
       movie_params = [:title, :year, :plot, :poster, :imdbID, :rating, :comment]
       params.select { |key, _| movie_params.include?(key.to_sym) }
     end
+
+    def to_favorite_hash(movie)
+      imdbID = movie['imdbID']
+      movie.delete('imdbID')
+      { imdbID => movie }
+    end
   end
 
   documentation 'Retrieve all favorite movies'
   get '/favorites' do
     json @favorite.all
   end
+
 
   documentation 'Saves a movie as favorite' do
     payload 'Request payload has to be json', {
@@ -51,16 +62,14 @@ namespace '/api' do
   post '/favorites' do
     movie = extract_movie_params
     
-    if @favorite.save(movie)
+    if @favorite.save!(movie)
       status 201
-      json({ movie['imdbID'] => movie })
+      json(to_favorite_hash(movie))
     else
       status 400
       json({ errors: @favorite.errors })
     end
   end
-
-
 end
 
 doc_endpoint '/doc'
