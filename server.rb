@@ -39,7 +39,21 @@ namespace '/api' do
     end
   end
 
-  documentation 'Retrieve all favorite movies'
+  documentation 'Retrieve all favorite movies' do
+    response 'json. An object with imdbIDs as key and corresponding favorited movies as values', {
+      'tt12345678': {
+        "title": "Spider Man",
+        "year": "1978",
+        "endyear": "1979",
+        "plot": "To fight against the evil...",
+        "poster": "https://m.media-amazon.com/images/M/MV5BM2EwYzA2YjMtNDdhYi00OTI1LWE2ODUtOWViODk4YjRjNzVmXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
+        "rating": "5",
+        "comment": "Awesome movie!"
+      },
+      'tt23456789': { 'title': 'Avatar', 'year': '2009', '...': '...' }
+    }
+    status 200
+  end
   get '/favorites' do
     status 200
     json @favorite.all
@@ -65,10 +79,14 @@ namespace '/api' do
     
     if @favorite.save!(movie)
       status 201
-      json(to_favorite_hash(movie))
+      p movie
+      json to_favorite_hash(movie)
     else
       status 400
-      json({ errors: @favorite.errors })
+      json({ 
+        errors: @favorite.errors, 
+        message: 'Cannot save movie into favorites list.'
+      })
     end
   end
 
@@ -85,13 +103,21 @@ namespace '/api' do
   patch '/favorites/:imdbID' do
     imdbID = params['imdbID']
     rating = params['rating']
+    
+    movie = @favorite.find_by_imdb_id(imdbID)
+    not_found_message = "Favorite movie not found for IMDb ID '#{imdbID}'."
+    halt 404, not_found_message if !movie
 
     if @favorite.update_rating!(imdbID, rating)
       status 200
-      json @favorite.find_by({ imdbID: imdbID })
+      movie['rating'] = rating
+      json to_favorite_hash(movie)
     else
       status 400
-      json({ errors: @favorite.errors })
+      json({ 
+        error: 'Rating must be a number in 0 to 5.', 
+        message: 'Cannot update rating.'
+      })
     end
   end
 end
