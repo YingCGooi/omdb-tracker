@@ -1,4 +1,5 @@
 require 'pg'
+require 'pry'
 
 class Favorite
   DB_NAME = 'omdb_tracker'
@@ -52,6 +53,23 @@ class Favorite
     favorites
   end
 
+  def find_by_imdb_id(imdbID)
+    return false if !valid_imdb_id?(imdbID)
+
+    sql = 'SELECT * FROM favorites WHERE imdbid = $1'
+    result = query(sql, imdbID)
+    result = result.to_a
+
+    return false if result.empty?
+    to_movie_hash(result[0])
+  end
+
+  def update_rating!(imdbID, rating)
+    return false if !valid_rating?(rating)
+    sql = 'UPDATE favorites SET rating = $1 WHERE imdbID = $2'
+    query(sql, rating, imdbID)
+  end
+
   private
 
   def bind_params(columns)
@@ -64,19 +82,20 @@ class Favorite
     return if movie['year'].nil?
     years = movie['year'].split(/–|-/)
     movie['year'] = years[0]
-    movie['endYear'] = years[1] if years[1]
+    movie['endyear'] = years[1] if years[1]
   end
 
   def to_movie_hash(tuple)
     tuple['year'] += "–#{tuple['endyear']}" if tuple['endyear']
 
     {
-      title: tuple['title'],
-      year: tuple['year'],
-      plot: tuple['plot'],
-      poster: tuple['poster'],
-      rating: tuple['rating'].to_i,
-      comment: tuple['comment']
+      'title' => tuple['title'],
+      'imdbID' => tuple['imdbid'],
+      'year' => tuple['year'],
+      'plot' => tuple['plot'],
+      'poster' => tuple['poster'],
+      'rating' => tuple['rating'].to_i,
+      'comment' => tuple['comment']
     }
   end
 
@@ -118,7 +137,7 @@ class Favorite
     validations = {
       'Movie must have a title': title_present?(m['title']),
       'Movie must have a valid year': valid_year?(m['year']),
-      'Movie must have a valid ending year': valid_end_year?(m['endYear']),
+      'Movie must have a valid ending year': valid_end_year?(m['endyear']),
       'Movie must have a rating of 0-5': valid_rating?(m['rating']),
       'Movie must have a poster image URL or "N/A"': valid_poster?(m['poster']),
       'Movie must have a valid IMDB ID': valid_imdb_id?(m['imdbID']),
