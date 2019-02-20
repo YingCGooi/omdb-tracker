@@ -2,7 +2,7 @@ require 'sinatra'
 require 'sinatra/contrib'
 require 'rack/contrib'
 require 'docdsl'
-require_relative 'db/model.rb'
+require_relative 'db/Favorite.rb'
 
 register Sinatra::DocDsl
 use Rack::PostBodyContentTypeParser

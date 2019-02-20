@@ -7,6 +7,7 @@ gem 'pg'
 gem 'sinatra-docdsl'
 gem 'rack-contrib'
 gem 'pry'
+gem 'faraday'
 
 group :production do
   gem 'puma'
