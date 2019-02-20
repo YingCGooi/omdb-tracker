@@ -85,8 +85,12 @@ class Favorite
     movie['endyear'] = years[1] if years[1]
   end
 
+  def restore_year_range(tuple)
+    tuple['year'] += "–#{tuple['endyear']}"
+  end
+
   def to_movie_hash(tuple)
-    tuple['year'] += "–#{tuple['endyear']}" if tuple['endyear']
+    restore_year_range(tuple) if tuple['endyear']
 
     {
       'title' => tuple['title'],
