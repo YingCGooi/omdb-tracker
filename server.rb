@@ -99,6 +99,7 @@ namespace '/api' do
     response 'JSON: the updated favorite movie'
     status 200, 'rating is updated'
     status 400, 'when rating cannot be updated or incorrect format in request payload. response: { error: ["Rating must be an integer between 0-5"] }'
+    status 404, 'when movie with given IMDb ID is not found.'
   end
   patch '/favorites/:imdbID' do
     imdbID = params['imdbID']
@@ -118,6 +119,21 @@ namespace '/api' do
         error: 'Rating must be a number in 0 to 5.', 
         message: 'Cannot update rating.'
       })
+    end
+  end
+
+
+  documentation 'Deletes a movie from favorites list' do
+    status 204, 'No body when delete is successful'
+    status 404, 'When movie with given IMDb ID is not found'
+  end
+  delete '/favorites/:imdbID' do
+    imdbID = params['imdbID']
+    
+    if @favorite.destroy!(imdbID)
+      halt 204
+    else
+      halt 404, "Favorite movie not found for IMDb ID '#{imdbID}'."
     end
   end
 end
