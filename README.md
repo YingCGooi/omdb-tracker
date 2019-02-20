@@ -1,4 +1,4 @@
-## Alpha Take Home Assignment - OMDb Movie Tracker
+# Alpha Take Home Assignment - OMDb Movie Tracker
 
 ## Installation
 Make sure to have PostgreSQL installed and running properly in your machine. Also, make sure that you have Ruby 2.4.1 installed and running locally.
