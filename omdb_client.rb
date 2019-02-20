@@ -6,7 +6,7 @@ require 'pry'
 require 'time'
 Dotenv.load
 
-class MovieTitleNotFound < StandardError; end
+class MovieNotFound < StandardError; end
 class InvalidAPIKey < StandardError; end
 
 class OmdbClient
