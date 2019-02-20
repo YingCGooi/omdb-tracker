@@ -66,8 +66,18 @@ class Favorite
 
   def update_rating!(imdbID, rating)
     return false if !valid_rating?(rating)
-    sql = 'UPDATE favorites SET rating = $1 WHERE imdbID = $2'
+
+    sql = 'UPDATE favorites SET rating = $1 WHERE imdbid = $2'
     query(sql, rating, imdbID)
+  end
+
+  def destroy!(imdbID)
+    return false if !valid_imdb_id?(imdbID)
+
+    sql = 'DELETE from favorites WHERE imdbid = $1'
+    result = query(sql, imdbID)
+
+    result.cmd_tuples == 1
   end
 
   private
