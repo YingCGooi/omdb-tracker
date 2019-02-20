@@ -8,6 +8,8 @@ gem 'sinatra-docdsl'
 gem 'rack-contrib'
 gem 'pry'
 gem 'faraday'
+gem 'logger'
+gem 'dotenv'
 
 group :production do
   gem 'puma'
