@@ -125,9 +125,13 @@ main {
     Search
 ============*/
 
-main form {
-  display: flex;
+.search {
+  height: 60px;
   width: 100%;
+}
+
+.search > div {
+  display: flex;
 }
 
 label {
@@ -140,13 +144,13 @@ input {
   border: 1px solid #AAAAAA;
 }
 
-#search-container input {
+.search input {
   border-right: none;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;  
 }
 
-#search-container button[type='submit'] {
+.search button[type='submit'] {
   width: 50px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -155,6 +159,20 @@ input {
 input, 
 button {
   padding: 8px;
+}
+
+p.error {
+  margin-top: 5px;
+  color: #EC6159;
+  font-weight: 400;
+}
+
+input.error {
+  border-color: #EC6159;
+}
+
+input:focus {
+  outline:0;
 }
 
 /*============
