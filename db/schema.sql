@@ -5,7 +5,7 @@ CREATE TABLE favorites (
     year numeric(4),
     endyear numeric(4),
     plot text,
-    poster varchar(512),
+    poster varchar(512) NOT NULL,
     rating numeric(1) NOT NULL CHECK (rating >= 0 AND rating <= 5),
     comment varchar(128) NOT NULL
 );
