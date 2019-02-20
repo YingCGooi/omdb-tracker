@@ -6,6 +6,7 @@ gem 'sinatra-contrib'
 gem 'pg'
 gem 'sinatra-docdsl'
 gem 'rack-contrib'
+gem 'pry'
 
 group :production do
   gem 'puma'
