@@ -39,6 +39,7 @@ namespace '/api' do
     end
   end
 
+
   documentation 'Retrieve all favorite movies' do
     response 'json. An object with imdbIDs as key and corresponding favorited movies as values', {
       'tt12345678': {
@@ -60,7 +61,7 @@ namespace '/api' do
   end
 
 
-  documentation 'Saves a movie into the favorites list' do
+  documentation 'Save a movie into the favorites list' do
     payload 'Request payload has to be json', {
       'title': 'String (required) : At least one character long.',
       'year': 'String : Format yyyy or yyyy-yyyy. If format is yyyy-yyyy, save ending year in endyear column. Not saved if format is incorrect',
@@ -70,7 +71,7 @@ namespace '/api' do
       'rating': 'Number 0-5',
       'comment': 'String (required) : 1 - 128 characters'
     }
-    response 'json. The newly saved favorite with imdbID as a key and other attributes as an object assigned to it.', { 'tt12345678': { movie_attrs: '...' } }
+    response 'json. The newly saved favorite with imdbID as a key and other attributes as an object assigned to it.', { 'tt12345678': { title: 'Spider-Man', year: '1986', '...': '...' } }
     status 201, 'When the movie is saved as favorite'
     status 400, "When movie cannot be saved (due to incorrect attributes). Body: { errors: [(error messages)] }"
   end
@@ -79,7 +80,6 @@ namespace '/api' do
     
     if @favorite.save!(movie)
       status 201
-      p movie
       json to_favorite_hash(movie)
     else
       status 400
@@ -91,7 +91,7 @@ namespace '/api' do
   end
 
 
-  documentation 'Updates a favorite movie rating.' do
+  documentation 'Update a favorite movie rating.' do
     payload 'Request payload is a json with a single rating attribute',
     {
       rating: 'Number : between 0-5'
@@ -123,7 +123,7 @@ namespace '/api' do
   end
 
 
-  documentation 'Deletes a movie from favorites list' do
+  documentation 'Delete a movie from favorites list' do
     status 204, 'No body when delete is successful'
     status 404, 'When movie with given IMDb ID is not found'
   end
