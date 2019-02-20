@@ -147,7 +147,7 @@ class Favorite
   end
 
   def valid_poster?(poster)
-    poster && (poster == 'N/A' || poster.match(/^https?:\/\//))
+    poster && (poster == 'N/A' || poster.match(/^https?:\/\//)) && poster.length <= 512
   end
 
   def errors_for_movie(m)
