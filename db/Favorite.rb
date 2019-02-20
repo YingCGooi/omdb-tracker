@@ -28,11 +28,14 @@ class Favorite
     return false if @errors
 
     @errors = []
+    db_insert_row!(movie)
+  end
+
+  def db_insert_row!(movie)
     columns = movie.keys
-    values = movie.values
+    values = movie.values 
 
-    sql = "INSERT INTO favorites (#{columns.join(', ')}) VALUES (#{bind_params(columns)})"
-
+    sql = "INSERT INTO favorites (#{columns.join(', ')}) VALUES (#{bind_params(columns)})"    
     begin
       query(sql, *values)
     rescue PG::UniqueViolation
