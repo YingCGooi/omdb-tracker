@@ -160,7 +160,8 @@ button {
   padding: 8px;
 }
 
-p.error {
+p.error,
+span.error {
   margin-top: 5px;
   color: #EC6159;
   font-weight: 400;
