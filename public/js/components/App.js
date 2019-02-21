@@ -4,13 +4,17 @@ import { connect } from 'react-redux';
 import SearchContainer from './SearchContainer';
 import FavoritesContainer from './FavoritesContainer';
 import AddFavoriteForm from './AddFavoriteForm';
-import { resetSaveFavoriteStatus, getAll } from '../actions/favoritesActions';
+import { 
+  resetSaveFavoriteStatus, 
+  resetUpdateRatingStatus, 
+  getAll 
+} from '../actions/favoritesActions';
 
 class App extends React.Component {
   state = {
     showFavorites: false,
     showAddFavoriteForm: false,
-    flashMessage: ''
+    flashMessage: '' 
   }
 
   hideForm = () => {
@@ -23,14 +27,18 @@ class App extends React.Component {
 
   componentDidUpdate = () => {
     if (this.props.saveStatus === 'SUCCESS') {
-
-      this.renderFlashMessage('Movie has been saved to favorites list!');
+      this.renderFlashMessage('Movie saved to favorites list!');
       this.hideForm();
-
-    } else if (this.props.saveStatus === 'ERROR') {
+      this.props.resetSaveStatus();      
+    } 
+    if (this.props.saveStatus === 'ERROR') {
       this.renderSaveError();
+      this.props.resetSaveStatus();      
     }
-    this.props.resetSaveStatus();
+    if (this.props.updateStatus === 'SUCCESS') {
+      this.renderFlashMessage('Rating successfully updated!');
+      this.props.resetUpdateStatus();
+    }
   }
 
   renderSaveError = () => {
@@ -100,6 +108,7 @@ const mapStateToProps = (state) => (
   {
     saveStatus: state.status.saveFavorite,
     saveError: state.status.saveFavoriteError,
+    updateStatus: state.status.updateRating,
   }
 )
 
@@ -107,6 +116,9 @@ const mapDispatchToProps = (dispatch) => (
   {
     resetSaveStatus() {
       dispatch(resetSaveFavoriteStatus())
+    },
+    resetUpdateStatus() {
+      dispatch(resetUpdateRatingStatus())
     },
     getAllFavorites() {
       dispatch(getAll())

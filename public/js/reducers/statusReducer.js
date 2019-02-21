@@ -2,9 +2,9 @@ const initialState = {
   search: '',
   searchError: '',
   saveFavorite: '',
-  saveFavoriteError: '',
+  saveFavoriteError: {},
   updateRating: '',
-  updateRatingError: '',
+  updateRatingError: {},
 }
 
 export default (state = initialState, action) => {
@@ -38,7 +38,7 @@ export default (state = initialState, action) => {
     'UPDATE_RATING_SUCCESS': {
       updateRating: 'SUCCESS',
       updateRatingError: '',
-    }
+    },
     'RESET_UPDATE_RATING': {
       updateRating: '',
       updateRatingError: '',

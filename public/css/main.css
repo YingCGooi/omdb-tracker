@@ -89,10 +89,11 @@ span {
 
 .flash {
   position: fixed;
-  bottom: 30px;  
+  bottom: 30px;
   margin: 0 auto;
   padding: 15px;  
   width: 80%;
+  max-width: 400px;
   background: #4B55A1;
   color: #FFFFFF;
   font-weight: 400;

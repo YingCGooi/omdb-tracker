@@ -31,6 +31,11 @@ export const updateRatingFailure = (error) => ({
   type: 'UPDATE_RATING_FAILURE', error
 });
 
+export const resetUpdateRatingStatus = () => ({
+  type: 'RESET_UPDATE_RATING'
+});
+
+
 
 export function save(movie) {
   return (dispatch) => {
@@ -56,7 +61,7 @@ export function getAll() {
   }
 }
 
-export function updateRating(imdbId, value) {
+export function updateRating(imdbId, value) { 
   return (dispatch) => {
     apiClient.updateRating(imdbId, value)
       .then(res => {
