@@ -1,6 +1,8 @@
 const initialState = {
   search: '',
   searchError: '',
+  saveFavorite: '',
+  saveFavoriteError: '',
 }
 
 export default (state = initialState, action) => {
@@ -9,7 +11,7 @@ export default (state = initialState, action) => {
       state = { 
         ...state, 
         search: 'PENDING', 
-        searchError: '' 
+        searchError: '',
       }
       break;
 
@@ -17,7 +19,7 @@ export default (state = initialState, action) => {
       state = { 
         ...state, 
         search: 'SUCCESS', 
-        searchError: '' 
+        searchError: '',
       }
       break;
 
@@ -26,6 +28,30 @@ export default (state = initialState, action) => {
         ...state,
         search: 'ERROR',
         searchError: action.error,
+      }
+      break;
+
+    case 'SAVE_FAVORITE_REQUEST':
+      state = {
+        ...state,
+        saveFavorite: 'PENDING',
+        saveFavoriteError: '',
+      }
+      break;
+
+    case 'SAVE_FAVORITE_SUCCESS':
+      state = {
+        ...state,
+        saveFavorite: 'SUCCESS',
+        saveFavoriteError: '',
+      }
+      break;
+
+    case 'SAVE_FAVORITE_FAILURE':
+      state = {
+        ...state,
+        saveFavorite: 'ERROR',
+        saveFavoriteError: action.error,
       }
       break;
 
