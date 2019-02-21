@@ -6,7 +6,7 @@ const MovieItem = ({ movie, isFavorite, handleFavoriteButtonClicked }) => (
     <div className='poster'>
       {
         (movie.poster === 'N/A')
-          ? <img src='http://via.placeholder.com/300x466' />
+          ? <img src='images/300x466.png' />
           : <img src={ movie.poster } />
       }
     </div>
