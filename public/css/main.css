@@ -171,7 +171,23 @@ input.error {
 }
 
 input:focus {
-  outline:0;
+  outline: 0;
+}
+
+.loading {
+  margin-top: 20px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 5px;
+}
+
+section.error {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
 }
 
 /*============
