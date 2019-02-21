@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import MovieItem from './MovieItem';
 import SearchInputForm from './SearchInputForm';
-import apiClient from '../apiClient';
 import { search } from '../actions/searchActions';
 
 const SearchContainer = (props) => (
