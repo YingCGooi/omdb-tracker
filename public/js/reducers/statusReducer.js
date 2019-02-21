@@ -3,6 +3,8 @@ const initialState = {
   searchError: '',
   saveFavorite: '',
   saveFavoriteError: '',
+  updateRating: '',
+  updateRatingError: '',
 }
 
 export default (state = initialState, action) => {
@@ -19,6 +21,7 @@ export default (state = initialState, action) => {
       search: 'ERROR',
       searchError: action.error, 
     },
+
     'SAVE_FAVORITE_SUCCESS': {
       saveFavorite: 'SUCCESS',
       saveFavoriteError: '',
@@ -30,6 +33,15 @@ export default (state = initialState, action) => {
     'RESET_SAVE_FAVORITE': {
       saveFavorite: '',
       saveFavoriteError: '',
+    },
+
+    'UPDATE_RATING_SUCCESS': {
+      updateRating: 'SUCCESS',
+      updateRatingError: '',
+    }
+    'RESET_UPDATE_RATING': {
+      updateRating: '',
+      updateRatingError: '',
     }
   }
 
