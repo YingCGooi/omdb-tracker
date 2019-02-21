@@ -1,6 +1,7 @@
 import React from 'react';
 import RatingForm from './RatingForm';
 import { connect } from 'react-redux';
+import 
 
 class AddFavoriteForm extends React.Component {
   state = {
@@ -17,23 +18,6 @@ class AddFavoriteForm extends React.Component {
     this.setState({ comment: event.target.value });
   }
 
-  onFormSubmit = (event) => {
-    event.preventDefault();    
-    const errors = this.validate();
-    this.setState({ errors });
-
-    if (Object.keys(errors).length > 0) return;
-    this.resetState();
-  }
-  
-  resetState = () => {
-    this.setState({
-      rating: 0,
-      comment: '',
-      errors: {}
-    }); 
-  }
-
   validate = () => {
     const { rating, comment } = this.state;
     const errors = {};
@@ -44,6 +28,28 @@ class AddFavoriteForm extends React.Component {
     if (rating > 5 || rating < 0) e.rating = 'Rating has to be 0-5.';
 
     return errors;
+  }
+
+  onFormSubmit = (event) => {
+    event.preventDefault();    
+    const errors = this.validate();
+    this.setState({ errors });
+
+    if (Object.keys(errors).length > 0) return;
+
+    const movie = this.props.movie;
+    movie.rating = this.state.rating;
+    movie.comment = this.state.comment;
+    this.props.save(movie);
+    this.resetState();
+  }
+
+  resetState = () => {
+    this.setState({
+      rating: 0,
+      comment: '',
+      errors: {}
+    });
   }
 
   render() {
@@ -102,7 +108,15 @@ class AddFavoriteForm extends React.Component {
 
 const mapStateToProps = (state) => (
   {
-    movie: state.search
+    movie: state.search,
+  }
+)
+
+const mapDispatchToProps = (dispatch) => (
+  {
+    save(movie) {
+      dispatch(save(movie))
+    }
   }
 )
 
