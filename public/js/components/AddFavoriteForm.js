@@ -10,8 +10,8 @@ class AddFavoriteForm extends React.Component {
     errors: {}
   }
 
-  onRate = (event) => {
-    this.setState({ rating: event.target.value });
+  onRate = (value) => {
+    this.setState({ rating: value });
   }
 
   onInputChange = (event) => {
