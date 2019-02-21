@@ -20,7 +20,7 @@ class AddFavoriteForm extends React.Component {
 
     return (
       <div id='add-favorite'>
-        <h2>Add To Favorites: { movie.title } <span>({ movie.year })</span></h2>
+        <h2>Add To Favorites: <span>{ movie.title } ({ movie.year })</span></h2>
 
         <form>
           <div className='poster'>

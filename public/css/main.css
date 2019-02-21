@@ -255,7 +255,8 @@ input[type='radio'] {
 }
 
 #add-favorite h2 {
-  font-weight: 400;
+  font-weight: 700;
+  padding: 10px 0;
 }
 
 #add-favorite {
