@@ -15,6 +15,7 @@ const FavoritesContainer = ({ favorites, updateRating }) => (
             isFavorite={true}
             editable={true}
             onRate={ (value) => updateRating(imdbID, value) }
+            onDelete={ () => console.log('delete') }
           />
         </li>
       ))

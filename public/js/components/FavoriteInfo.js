@@ -1,20 +1,25 @@
 import React from 'react';
 import RatingForm from './RatingForm';
 
-const FavoriteInfo = ({ rating, imdbID, comment, editable, onRate }) => (
+const FavoriteInfo = (props) => (
   <section className='favorite-info'>
     <div className='hr'></div>
     <span>Rating: </span>
     <RatingForm 
-      rating={ rating }
-      imdbID={ imdbID }
-      editable={ editable }
-      onRate={ onRate }
+      rating={ props.rating }
+      imdbID={ props.imdbID }
+      editable={ props.editable }
+      onRate={ props.onRate }
     />
-    <p><span>Comment:</span> { comment }</p>
+    <p><span>Comment:</span> { props.comment }</p>
     {
-      (editable)
-        ? <button className='remove'>Remove</button>
+      (props.editable)
+        ? <button
+            className='remove'
+            onClick={ props.onDelete }
+          >
+            Remove
+          </button>
         : null
     }
   </section>

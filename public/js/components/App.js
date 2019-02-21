@@ -109,6 +109,7 @@ const mapStateToProps = (state) => (
     saveStatus: state.status.saveFavorite,
     saveError: state.status.saveFavoriteError,
     updateStatus: state.status.updateRating,
+    updateStatusError: state.status.updateRatingError,
   }
 )
 

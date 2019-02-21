@@ -1,7 +1,7 @@
 import React from 'react';
 import FavoriteInfo from './FavoriteInfo';
 
-const MovieItem = ({ movie, isFavorite, handleFavoriteButtonClicked, editable, onRate }) => (
+const MovieItem = ({ movie, ...props }) => (
   <article className='movie'>
     <div className='poster'>
       {
@@ -16,16 +16,17 @@ const MovieItem = ({ movie, isFavorite, handleFavoriteButtonClicked, editable, o
         <p>{ movie.plot }</p>
       </div>
       {
-        (isFavorite) 
+        (props.isFavorite) 
           ? <FavoriteInfo 
               rating={ movie.rating } 
               comment={ movie.comment }
-              editable={ editable }
-              onRate={ onRate }
+              editable={ props.editable }
+              onRate={ props.onRate }
+              onDelete={ props.onDelete }
             />
           : <button 
               className='favorite'
-              onClick={ handleFavoriteButtonClicked }
+              onClick={ props.handleFavoriteButtonClicked }
             >
               Add To Favorites
             </button> 

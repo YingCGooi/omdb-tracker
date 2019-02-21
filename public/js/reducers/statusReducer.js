@@ -39,6 +39,10 @@ export default (state = initialState, action) => {
       updateRating: 'SUCCESS',
       updateRatingError: '',
     },
+    'UPDATE_RATING_FAILURE': {
+      updateRating: 'ERROR',
+      updateRatingError: '',
+    },
     'RESET_UPDATE_RATING': {
       updateRating: '',
       updateRatingError: '',
