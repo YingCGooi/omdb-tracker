@@ -31,8 +31,8 @@ class OmdbClient
     log_request(url, response.status, start_time)
 
     data = parse_json(response)
-    check_status(data, response.status)
     cache_response(url, response)
+    check_status(data, response.status)    
 
     data
   end
