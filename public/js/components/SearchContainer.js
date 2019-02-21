@@ -17,6 +17,7 @@ const SearchContainer = (props) => (
           movie={ props.favoriteInfo ? props.favoriteInfo : props.result }
           isFavorite={ !!props.favoriteInfo }
           handleFavoriteButtonClicked={ props.handleFavoriteButtonClicked }
+          editable={ false }
         />
       : null
     }

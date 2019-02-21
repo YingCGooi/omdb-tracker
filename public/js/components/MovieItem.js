@@ -1,7 +1,7 @@
 import React from 'react';
 import FavoriteInfo from './FavoriteInfo';
 
-const MovieItem = ({ movie, isFavorite, handleFavoriteButtonClicked }) => (
+const MovieItem = ({ movie, isFavorite, handleFavoriteButtonClicked, editable, onRate }) => (
   <article className='movie'>
     <div className='poster'>
       {
@@ -19,8 +19,9 @@ const MovieItem = ({ movie, isFavorite, handleFavoriteButtonClicked }) => (
         (isFavorite) 
           ? <FavoriteInfo 
               rating={ movie.rating } 
-              comment={ movie.comment } 
-              imdbId={ movie.imdbID }
+              comment={ movie.comment }
+              editable={ editable }
+              onRate={ onRate }
             />
           : <button 
               className='favorite'

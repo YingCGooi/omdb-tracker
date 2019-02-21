@@ -81,8 +81,8 @@ class AddFavoriteForm extends React.Component {
             <RatingForm 
               rating={ this.state.rating }
               imdbID={ movie.imdbID }
-              updateDB={ false }
               onRate={ this.onRate }
+              editable={ true }
             />
 
             <div className='hr'></div>            

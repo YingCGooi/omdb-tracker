@@ -4,29 +4,24 @@ import { connect } from 'react-redux';
 import MovieItem from './MovieItem';
 import { getAll } from '../actions/favoritesActions';
 
-class FavoritesContainer extends React.Component {
-  componentDidMount() {
-    this.props.getAll();
-  }
-
-  render() {
-    const favorites = this.props.favorites;
-
-    return(
-      <main id='favorites-container'>
-        <ul>
-        {
-          Object.keys(favorites).map(imdbID => (
-            <li key={imdbID}>
-              <MovieItem movie={ favorites[imdbID] } isFavorite={true} />
-            </li>
-          ))
-        }
-        </ul>
-      </main>
-    )
-  }
-}
+const FavoritesContainer = ({ favorites, handleRate }) => (
+  <main id='favorites-container'>
+    <ul>
+    {
+      Object.keys(favorites).map(imdbID => (
+        <li key={imdbID}>
+          <MovieItem 
+            movie={ favorites[imdbID] } 
+            isFavorite={true}
+            editable={true}
+            onRate={ (value) => handleOnRate(value, imdbID) }
+          />
+        </li>
+      ))
+    }
+    </ul>
+  </main>
+)
 
 const mapStateToProps = (state) => (
   { 
@@ -35,11 +30,11 @@ const mapStateToProps = (state) => (
 )
 
 const mapDispatchToProps = (dispatch) => (
-  { 
-    getAll() {
-      dispatch(getAll())
-    },
+  {
+    handleOnRate(event, imdbID) {
+      dispatch()
+    }
   }
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(FavoritesContainer);
+export default connect(mapStateToProps)(FavoritesContainer);

@@ -257,6 +257,10 @@ i.star {
   cursor: pointer;
 }
 
+.locked i.star {
+  cursor: default;
+}
+
 .bright {
   filter: brightness(110%);
 }

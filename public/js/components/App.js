@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import SearchContainer from './SearchContainer';
 import FavoritesContainer from './FavoritesContainer';
 import AddFavoriteForm from './AddFavoriteForm';
-import { resetSaveFavoriteStatus } from '../actions/favoritesActions';
+import { resetSaveFavoriteStatus, getAll } from '../actions/favoritesActions';
 
 class App extends React.Component {
   state = {
@@ -15,6 +15,10 @@ class App extends React.Component {
 
   hideForm = () => {
     this.setState({ showAddFavoriteForm: false });
+  }
+
+  componentDidMount = () => {
+    this.props.getAllFavorites();
   }
 
   componentDidUpdate = () => {
@@ -103,7 +107,10 @@ const mapDispatchToProps = (dispatch) => (
   {
     resetSaveStatus() {
       dispatch(resetSaveFavoriteStatus())
-    },  
+    },
+    getAllFavorites() {
+      dispatch(getAll())
+    }
   }
 )
 
