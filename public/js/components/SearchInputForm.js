@@ -14,12 +14,13 @@ class SearchInputForm extends React.Component {
 
   onFormSubmit = (event) => {
     event.preventDefault();
-    const error = this.validate(this.state.title);
+    const title = this.state.title;
+    const error = this.validate(title);
     this.setState({ error });
 
     if (error.length > 0) return;
+    this.props.onSubmit(title);
     this.setState({ title: '', error: '' });
-    this.props.onSubmit;
   }
 
   validate = (title) => {
