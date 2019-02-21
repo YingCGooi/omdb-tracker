@@ -10,7 +10,7 @@ class MovieNotFound < StandardError; end
 class InvalidAPIKey < StandardError; end
 
 class OmdbClient
-  @@cache = {}
+  @@cache = {} # use memcached or Redis in production
 
   def initialize(http_client=Faraday.new)
     @http_client = http_client

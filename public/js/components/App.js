@@ -1,4 +1,5 @@
 import React from 'react';
+
 import SearchContainer from './SearchContainer';
 import FavoritesContainer from './FavoritesContainer';
 import AddFavoriteForm from './AddFavoriteForm';
@@ -7,6 +8,14 @@ class App extends React.Component {
   state = {
     showFavorites: false,
     showAddFavoriteForm: false,
+  }
+
+  hideForm = () => {
+    this.setState({ showAddFavoriteForm: false });
+  }
+
+  handleSaveSuccess = ({ message }) => {
+    this.hideForm();
   }
 
   render() {
@@ -41,10 +50,12 @@ class App extends React.Component {
             ? <div>
                 <div 
                   className='overlay'
-                  onClick={ () => this.setState({ showAddFavoriteForm: false }) }
+                  onClick={ this.hideForm }
                 >
                 </div>
-                <AddFavoriteForm />
+                <AddFavoriteForm 
+                  handleSaveSuccess={ this.handleSaveSuccess }
+                />
               </div>
             : null
         }

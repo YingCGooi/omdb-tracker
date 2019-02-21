@@ -37,11 +37,14 @@ class AddFavoriteForm extends React.Component {
 
     if (Object.keys(errors).length > 0) return;
 
-    const movie = this.props.movie;
+    const payload = this.buildPayload(this.props.movie);
+    this.props.save(payload);
+  }
+
+  buildPayload = (movie) => {
     movie.rating = this.state.rating;
     movie.comment = this.state.comment;
-    this.props.save(movie);
-    this.resetState();
+    return movie;
   }
 
   resetState = () => {
@@ -50,6 +53,15 @@ class AddFavoriteForm extends React.Component {
       comment: '',
       errors: {}
     });
+  }
+
+  componentDidUpdate = () => {
+    if (this.props.saveFavoriteStatus === 'SUCCESS') {
+      this.props.handleSaveSuccess({ 
+        message: 'Movie has been saved to favorites list!'
+      });
+      this.resetState();
+    }
   }
 
   render() {
@@ -109,6 +121,7 @@ class AddFavoriteForm extends React.Component {
 const mapStateToProps = (state) => (
   {
     movie: state.search,
+    saveFavoriteStatus: state.status.saveFavorite,
   }
 )
 
