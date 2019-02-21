@@ -135,7 +135,7 @@ class Favorite
   end
 
   def valid_rating?(rating)
-    rating && (0..5).include?(rating)
+    rating && (0..5).include?(rating.to_i)
   end
 
   def valid_imdb_id?(imdbID)
