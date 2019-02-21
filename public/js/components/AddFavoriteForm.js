@@ -1,7 +1,7 @@
 import React from 'react';
 import RatingForm from './RatingForm';
 import { connect } from 'react-redux';
-import 
+import { save } from '../actions/favoritesActions';
 
 class AddFavoriteForm extends React.Component {
   state = {
@@ -120,4 +120,4 @@ const mapDispatchToProps = (dispatch) => (
   }
 )
 
-export default connect(mapStateToProps)(AddFavoriteForm);
+export default connect(mapStateToProps, mapDispatchToProps)(AddFavoriteForm);

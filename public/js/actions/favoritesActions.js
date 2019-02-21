@@ -1,7 +1,7 @@
 import apiClient from '../apiClient';
 
-export const saveFavoriteRequest = (movie) => ({
-  type: 'SAVE_FAVORITE_REQUEST', movie
+export const saveFavoriteRequest = () => ({
+  type: 'SAVE_FAVORITE_REQUEST'
 });
 
 export const saveFavoriteSuccess = (favorite) => ({
@@ -14,14 +14,14 @@ export const saveFavoriteFailure = (error) => ({
 
 export function save(movie) {
   return (dispatch) => {
-    dispatch(searchRequest());
+    dispatch(saveFavoriteRequest());
 
-    apiClient.query(title)
-      .then(response => {
-        dispatch(searchSuccess(response.data))
+    apiClient.save(movie)
+      .then(res => {
+        dispatch(saveFavoriteSuccess(res.data))
       })
-      .catch(error => {
-        dispatch(searchFailure(error.response.data))
+      .catch(err => {
+        dispatch(saveFavoriteFailure(err.response.data))
       });
   }
 }

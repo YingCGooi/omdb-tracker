@@ -20,6 +20,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case 'SAVE_FAVORITE_SUCCESS':
+      state = Object.assign({}, state, action.favorite);
+      break;
 
     default: return state;
   }
