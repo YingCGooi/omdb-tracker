@@ -8,6 +8,7 @@ class App extends React.Component {
   state = {
     showFavorites: false,
     showAddFavoriteForm: false,
+    flashMessage: ''
   }
 
   hideForm = () => {
@@ -16,8 +17,17 @@ class App extends React.Component {
 
   handleSaveSuccess = ({ message }) => {
     this.hideForm();
+    this.renderFlashMessage(message);
   }
 
+  renderFlashMessage = (message) => {
+    console.log('flash', message);
+    this.setState({ flashMessage: message });
+    setTimeout(() => {
+      this.setState({ flashMessage: '' });
+    }, 2000)
+  }
+ 
   render() {
     return (
       <div id='app'>
@@ -57,6 +67,11 @@ class App extends React.Component {
                   handleSaveSuccess={ this.handleSaveSuccess }
                 />
               </div>
+            : null
+        }
+        { 
+          (this.state.flashMessage)
+            ? <p className='flash'>{ this.state.flashMessage }</p>
             : null
         }
       </div>
