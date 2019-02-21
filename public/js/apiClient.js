@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const SEARCH_URL = (title) => '/api/search?title=' + title;
-
 const FAVORITES_URL = '/api/favorites';
+const FAVORITE_URL = (imdbID) => '/favorites/' + imdbID;
 
 const apiClient = {
   query(title) {
@@ -16,6 +16,12 @@ const apiClient = {
 
   getAllFavorites() {
     return axios.get(FAVORITES_URL);
+  },
+
+  updateRating(imdbID, value) {
+    return axios.patch(FAVORITE_URL(imdbID), {
+      rating: value,
+    });
   }
 }
 
