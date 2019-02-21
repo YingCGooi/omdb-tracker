@@ -3,18 +3,25 @@ import { connect } from 'react-redux';
 
 import MovieItem from './MovieItem';
 import SearchInputForm from './SearchInputForm';
+import apiClient from '../apiClient';
+import { search } from '../actions/searchActions';
 
-const SearchContainer = ({ result, favoriteInfo, handleFavoriteButtonClicked }) => (
+const SearchContainer = (props) => (
   <main id='search-container'>
     <SearchInputForm 
       placeholder='Search movie title...'
-      onSubmit={() => ()}
+      onSubmit={ (title) => props.search(title) }
     />
-    <MovieItem
-      movie={ favoriteInfo ? favoriteInfo : result }
-      isFavorite={ !!favoriteInfo }
-      handleFavoriteButtonClicked={ handleFavoriteButtonClicked }
-    />
+    {
+      props.result.title
+      ? <MovieItem
+          show={ props.result.title }
+          movie={ props.favoriteInfo ? props.favoriteInfo : props.result }
+          isFavorite={ !!props.favoriteInfo }
+          handleFavoriteButtonClicked={ props.handleFavoriteButtonClicked }
+        />
+      : null
+    }
   </main>
 );
 
@@ -25,4 +32,12 @@ const mapStateToProps = (state) => (
   }
 );
 
-export default connect(mapStateToProps)(SearchContainer);
+const mapDispatchToProps = (dispatch) => (
+  {
+    search: (title) => {
+      dispatch(search(title))
+    }
+  }
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);
