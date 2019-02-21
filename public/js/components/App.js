@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import SearchContainer from './SearchContainer';
 import FavoritesContainer from './FavoritesContainer';
 import AddFavoriteForm from './AddFavoriteForm';
+import { resetSaveFavoriteStatus } from '../actions/favoritesActions';
 
 class App extends React.Component {
   state = {
@@ -15,13 +17,26 @@ class App extends React.Component {
     this.setState({ showAddFavoriteForm: false });
   }
 
-  handleSaveSuccess = ({ message }) => {
-    this.hideForm();
+  componentDidUpdate = () => {
+    if (this.props.saveStatus === 'SUCCESS') {
+
+      this.renderFlashMessage('Movie has been saved to favorites list!');
+      this.hideForm();
+
+    } else if (this.props.saveStatus === 'ERROR') {
+      this.renderSaveError();
+    }
+    this.props.resetSaveStatus();
+  }
+
+  renderSaveError = () => {
+    const errorObj = this.props.saveError;
+    const message = 
+      errorObj.errors.join(',') + " - " + errorObj.message;
     this.renderFlashMessage(message);
   }
 
   renderFlashMessage = (message) => {
-    console.log('flash', message);
     this.setState({ flashMessage: message });
     setTimeout(() => {
       this.setState({ flashMessage: '' });
@@ -63,9 +78,7 @@ class App extends React.Component {
                   onClick={ this.hideForm }
                 >
                 </div>
-                <AddFavoriteForm 
-                  handleSaveSuccess={ this.handleSaveSuccess }
-                />
+                <AddFavoriteForm />
               </div>
             : null
         }
@@ -79,4 +92,19 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => (
+  {
+    saveStatus: state.status.saveFavorite,
+    saveError: state.status.saveFavoriteError,
+  }
+)
+
+const mapDispatchToProps = (dispatch) => (
+  {
+    resetSaveStatus() {
+      dispatch(resetSaveFavoriteStatus())
+    },  
+  }
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

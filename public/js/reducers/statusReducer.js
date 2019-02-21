@@ -6,56 +6,34 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  switch (action.type) {
-    case 'SEARCH_REQUEST':
-      state = { 
-        ...state, 
-        search: 'PENDING', 
-        searchError: '',
-      }
-      break;
-
-    case 'SEARCH_SUCCESS':
-      state = { 
-        ...state, 
-        search: 'SUCCESS', 
-        searchError: '',
-      }
-      break;
-
-    case 'SEARCH_FAILURE':
-      state = { 
-        ...state,
-        search: 'ERROR',
-        searchError: action.error,
-      }
-      break;
-
-    case 'SAVE_FAVORITE_REQUEST':
-      state = {
-        ...state,
-        saveFavorite: 'PENDING',
-        saveFavoriteError: '',
-      }
-      break;
-
-    case 'SAVE_FAVORITE_SUCCESS':
-      state = {
-        ...state,
-        saveFavorite: 'SUCCESS',
-        saveFavoriteError: '',
-      }
-      break;
-
-    case 'SAVE_FAVORITE_FAILURE':
-      state = {
-        ...state,
-        saveFavorite: 'ERROR',
-        saveFavoriteError: action.error,
-      }
-      break;
-
-    default: return state;
+  const actionHandlers = {
+    'SEARCH_REQUEST': {
+      search: 'PENDING',
+      searchError: '',
+    },
+    'SEARCH_SUCCESS': {
+      search: 'SUCCESS', 
+      searchError: '',      
+    },
+    'SEARCH_FAILURE': {
+      search: 'ERROR',
+      searchError: action.error, 
+    },
+    'SAVE_FAVORITE_SUCCESS': {
+      saveFavorite: 'SUCCESS',
+      saveFavoriteError: '',
+    },
+    'SAVE_FAVORITE_FAILURE': {
+      saveFavorite: 'ERROR',
+      saveFavoriteError: action.error,
+    },
+    'RESET_SAVE_FAVORITE': {
+      saveFavorite: '',
+      saveFavoriteError: '',
+    }
   }
+
+  const statesToUpdate = actionHandlers[action.type];
+  state = Object.assign({}, state, statesToUpdate);
   return state;
 }

@@ -13,6 +13,10 @@ const apiClient = {
   save(movie) {
     return axios.post(FAVORITES_URL, movie);
   },
+
+  getAllFavorites() {
+    return axios.get(FAVORITES_URL);
+  }
 }
 
 window.apiClient = apiClient;

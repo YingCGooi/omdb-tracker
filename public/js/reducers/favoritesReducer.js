@@ -24,6 +24,10 @@ export default (state = initialState, action) => {
       state = Object.assign({}, state, action.favorite);
       break;
 
+    case 'GET_FAVORITES_SUCCESS':
+      state = action.favorites;
+      break;
+
     default: return state;
   }
   return state;

@@ -1,7 +1,7 @@
 import React from 'react';
 import RatingForm from './RatingForm';
 import { connect } from 'react-redux';
-import { save } from '../actions/favoritesActions';
+import { save, resetSaveFavoriteStatus } from '../actions/favoritesActions';
 
 class AddFavoriteForm extends React.Component {
   state = {
@@ -53,15 +53,6 @@ class AddFavoriteForm extends React.Component {
       comment: '',
       errors: {}
     });
-  }
-
-  componentDidUpdate = () => {
-    if (this.props.saveFavoriteStatus === 'SUCCESS') {
-      this.props.handleSaveSuccess({ 
-        message: 'Movie has been saved to favorites list!'
-      });
-      this.resetState();
-    }
   }
 
   render() {
@@ -121,7 +112,6 @@ class AddFavoriteForm extends React.Component {
 const mapStateToProps = (state) => (
   {
     movie: state.search,
-    saveFavoriteStatus: state.status.saveFavorite,
   }
 )
 
@@ -129,7 +119,7 @@ const mapDispatchToProps = (dispatch) => (
   {
     save(movie) {
       dispatch(save(movie))
-    }
+    },
   }
 )
 
