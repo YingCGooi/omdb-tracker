@@ -1,4 +1,5 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from "redux-thunk";
 
 import search from './reducers/searchReducer';
 import favorites from './reducers/favoritesReducer';
@@ -8,4 +9,6 @@ export default createStore(
     search,
     favorites
   }),
+  {},
+  applyMiddleware(thunk)
 )
