@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const SEARCH_URL = (title) => '/api/search?title=' + title;
 const FAVORITES_URL = '/api/favorites';
-const FAVORITE_URL = (imdbID) => '/favorites/' + imdbID;
+const FAVORITE_URL = (imdbID) => '/api/favorites/' + imdbID;
 
 const apiClient = {
   query(title) {

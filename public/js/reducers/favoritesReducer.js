@@ -28,6 +28,10 @@ export default (state = initialState, action) => {
       state = action.favorites;
       break;
 
+    case 'UPDATE_RATING_SUCCESS':
+      state = Object.assign({}, state, action.favorite);
+      break;
+
     default: return state;
   }
   return state;

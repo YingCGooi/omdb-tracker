@@ -1,8 +1,5 @@
 import apiClient from '../apiClient';
 
-export const saveFavoriteRequest = () => ({
-  type: 'SAVE_FAVORITE_REQUEST'
-});
 
 export const saveFavoriteSuccess = (favorite) => ({
   type: 'SAVE_FAVORITE_SUCCESS', favorite
@@ -16,10 +13,27 @@ export const resetSaveFavoriteStatus = () => ({
   type: 'RESET_SAVE_FAVORITE'
 });
 
+
+export const getAllSuccess = (favorites) => ({
+  type: 'GET_FAVORITES_SUCCESS', favorites
+});
+
+export const getAllFailure = (error) => ({
+  type: 'GET_FAVORITES_FAILURE', error
+});
+
+
+export const updateRatingSuccess = (favorite) => ({
+  type: 'UPDATE_RATING_SUCCESS', favorite
+});
+
+export const updateRatingFailure = (error) => ({
+  type: 'UPDATE_RATING_FAILURE', error
+});
+
+
 export function save(movie) {
   return (dispatch) => {
-    dispatch(saveFavoriteRequest());
-
     apiClient.save(movie)
       .then(res => {
         dispatch(saveFavoriteSuccess(res.data))
@@ -30,28 +44,26 @@ export function save(movie) {
   }
 }
 
-export const getAllRequest = () => ({
-  type: 'GET_FAVORITES_REQUEST'
-});
-
-export const getAllSuccess = (favorites) => ({
-  type: 'GET_FAVORITES_SUCCESS', favorites
-});
-
-export const getAllFailure = (error) => ({
-  type: 'GET_FAVORITES_FAILURE', error
-});
-
 export function getAll() {
   return (dispatch) => {
-    dispatch(getAllRequest());
-
     apiClient.getAllFavorites()
       .then(res => {
         dispatch(getAllSuccess(res.data))
       })
       .catch(err => {
         dispatch(getAllFailure(err.response.data))
+      });
+  }
+}
+
+export function updateRating(imdbId, value) {
+  return (dispatch) => {
+    apiClient.updateRating(imdbId, value)
+      .then(res => {
+        dispatch(updateRatingSuccess(res.data))
+      })
+      .catch(err => {
+        dispatch(updateRatingFailure(err.response.data))
       });
   }
 }
