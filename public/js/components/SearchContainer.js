@@ -12,7 +12,7 @@ const SearchContainer = (props) => (
       onSubmit={ (title) => props.search(title) }
     />
     {
-      props.searchStatus === 'SUCCESS'
+      (props.searchStatus === 'SUCCESS')
       ? <MovieItem
           movie={ props.favoriteInfo ? props.favoriteInfo : props.result }
           isFavorite={ !!props.favoriteInfo }
@@ -21,14 +21,14 @@ const SearchContainer = (props) => (
       : null
     }
     {
-      props.searchStatus === 'PENDING'
+      (props.searchStatus === 'PENDING')
       ? <section className='loading'>
           <img src='../../images/loading.gif' />
         </section>
       : null
     }
     {
-      props.searchStatus === 'ERROR'
+      (props.searchStatus === 'ERROR')
       ? <section className='error'> 
           <p className='error'>
             <i className="red exclamation triangle icon"></i>
