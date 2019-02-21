@@ -51,7 +51,7 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps = (dispatch) => (
   {
-    search: (title) => {
+    search(title) {
       dispatch(search(title))
     }
   }
