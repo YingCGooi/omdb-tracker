@@ -194,6 +194,17 @@ section.error {
 /*============
     Movie
 ============*/
+#favorites-container .movie {
+  margin: 0;
+}
+
+#favorites-container li {
+  margin: 20px 0;
+}
+
+#favorites-container li:first-of-type {
+  margin-top: 0;
+}
 
 .movie img {
   display: block;
@@ -299,4 +310,96 @@ fieldset {
 
 strong {
   font-weight: 700;
+}
+
+/*================
+   Media Queries
+================*/
+
+@media screen and (max-width: 800px) {
+  main {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  article {
+    flex-direction: column;
+  }
+
+  .poster {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .poster img {
+    display: block;
+    height: 300px;
+    width: auto;
+  }
+
+  div.info {
+    padding-left: 0 !important;
+  }
+
+  article h2 {
+    text-align: center;
+  }
+
+  h2 + p {
+    margin-top: 40px;
+  }
+
+  button.favorite,
+  button.remove {
+    display: block;
+    margin: 0 auto;
+  }
+
+  button.favorite {
+    margin-top: 20px;
+  }
+
+  #add-favorite {
+    left: 0;
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  #add-favorite .poster {
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  main {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  #add-favorite {
+    top: 50px;
+  }
+
+  #add-favorite h2 {
+    text-align: center;
+  }
+
+  #add-favorite .poster {
+    margin-bottom: 20px;
+  }
+
+  #add-favorite img {
+    height: 160px;
+    width: auto;    
+  }
+
+  #add-favorite form {
+    flex-direction: column;
+  }
+
+  fieldset {
+    padding-left: 0;
+  }
 }
