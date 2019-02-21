@@ -4,25 +4,57 @@ import { connect } from 'react-redux';
 
 class AddFavoriteForm extends React.Component {
   state = {
-    fields: {
-      rating: 0,
-      comment: ''
-    },
-    fieldErrors: {},
+    rating: 0,
+    comment: '',
+    errors: {}
   }
 
-  onRate = () => {
+  onRate = (event) => {
+    this.setState({ rating: event.target.value });
+  }
 
+  onInputChange = (event) => {
+    this.setState({ comment: event.target.value });
+  }
+
+  onFormSubmit = (event) => {
+    event.preventDefault();    
+    const errors = this.validate();
+    this.setState({ errors });
+
+    if (Object.keys(errors).length > 0) return;
+    this.resetState();
+  }
+  
+  resetState = () => {
+    this.setState({
+      rating: 0,
+      comment: '',
+      errors: {}
+    }); 
+  }
+
+  validate = () => {
+    const { rating, comment } = this.state;
+    const errors = {};
+    const e = errors;
+
+    if (comment.trim().length === 0) e.comment = 'Comment is required!';
+    if (comment.length > 128) e.comment = 'Comment must not exceed 128 letters.';
+    if (rating > 5 || rating < 0) e.rating = 'Rating has to be 0-5.';
+
+    return errors;
   }
 
   render() {
     const movie = this.props.movie;
+    const commentError = this.state.errors.comment;
 
     return (
       <div id='add-favorite'>
         <h2>Add To Favorites: <span>{ movie.title } ({ movie.year })</span></h2>
 
-        <form>
+        <form onSubmit={ this.onFormSubmit }>
           <div className='poster'>
             {
               (movie.poster === 'N/A')
@@ -32,9 +64,13 @@ class AddFavoriteForm extends React.Component {
           </div>
 
           <fieldset>
-            <label>Rate this movie:</label>
+            <label>
+              Rate this movie:
+              <span className='error'>{ this.state.errors.rating }</span>
+            </label>
+            
             <RatingForm 
-              rating={ 0 } 
+              rating={ this.state.rating }
               imdbID={ movie.imdbID }
               updateDB={ false }
               onRate={ this.onRate }
@@ -42,8 +78,19 @@ class AddFavoriteForm extends React.Component {
 
             <div className='hr'></div>            
 
-            <label htmlFor='comment'>Add your comment:</label>
-            <input id='comment' type='text' name='comment' placeholder='A few words about this movie...' />
+            <label htmlFor='comment'>
+              Add your comment:
+              <span className='error'> { commentError }</span>
+            </label>
+            <input 
+              id='comment'
+              className={ commentError ? 'error' : '' }
+              type='text' 
+              name='comment' 
+              placeholder='A few words about this movie...'
+              onChange={ this.onInputChange }
+              value={ this.state.comment }
+            />
 
             <button type='submit'>Save</button>
           </fieldset>

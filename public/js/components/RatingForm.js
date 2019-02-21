@@ -23,7 +23,12 @@ class RatingForm extends React.Component {
             onMouseEnter={ () => this.setState({ hoverStars: value }) }
             onMouseLeave={ () => this.setState({ hoverStars: 0 }) }
           >
-            <input type='radio' name='rating' value={ value } />
+            <input 
+              type='radio' 
+              name='rating' 
+              value={ value }
+              onChange={ this.props.onRate }
+            />
             <i className={ this.starClassName(value) } />
           </label>
         ))
