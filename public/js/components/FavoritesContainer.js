@@ -22,7 +22,7 @@ const FavoritesContainer = ({ favorites, updateRating, deleteFavorite }) => (
     }
     {
       (Object.keys(favorites).length === 0)
-        ? <p className='message'>Favorite list empty.</p>
+        ? <p className='message'>Favorites list empty.</p>
         : null
     }
     </ul>
