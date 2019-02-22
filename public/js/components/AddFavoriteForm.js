@@ -14,7 +14,7 @@ class AddFavoriteForm extends React.Component {
     this.setState({ rating: value });
   }
 
-  onInputChange = (event) => {
+  onTextAreaChange = (event) => {
     this.setState({ comment: event.target.value });
   }
 
@@ -91,15 +91,15 @@ class AddFavoriteForm extends React.Component {
               Add your comment:
               <span className='error'> { commentError }</span>
             </label>
-            <input 
+            <textarea 
               id='comment'
               className={ commentError ? 'error' : '' }
-              type='text' 
               name='comment' 
               placeholder='A few words about this movie...'
-              onChange={ this.onInputChange }
+              onChange={ this.onTextAreaChange }
               value={ this.state.comment }
-            />
+              rows='2'
+            ></textarea>
 
             <button type='submit'>Save</button>
           </fieldset>
