@@ -51,7 +51,7 @@ createdb omdb_tracker_test
 psql omdb_tracker_test < db/schema.sql
 ```
 
-3. Run all unit tests
+3. Run all tests
 ```
 bundle exec ruby test/api_test.rb
 ```
