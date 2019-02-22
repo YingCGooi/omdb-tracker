@@ -40,7 +40,7 @@ class APITest < Minitest::Test
 
   # GET /api/search
   # For now, each test sends a network request to the OMDb API.
-  # In future, we can use a mocked client to improve performance of testing.
+  # In future, we can use a mocked API client to improve performance of testing.
   def test_search_returns_movie_as_json
     get '/api/search?title=avatar'
     assert_equal 200, last_response.status
@@ -49,11 +49,16 @@ class APITest < Minitest::Test
     assert MOVIE_ATTRS.all? { |attr| json[attr].length > 0 }
   end
 
+  def test_search_returns_error_with_non_existing_title
+    get '/api/search?title=abc1234567890'
+    assert_equal 404, last_response.status
+    assert_equal 'Movie not found!', last_response.body
+  end
+
   def test_does_not_search_with_empty_title
     get '/api/search?title='
     assert_equal 400, last_response.status
-    puts last_response.body
-    # assert_equal
+    assert_equal 'Title cannot be blank!', last_response.body
   end
 
   # GET /api/favorites
@@ -142,6 +147,6 @@ end
 
 class Logger
   def self.info(string)
-    # puts string if !string.include?('DELETE')
+    # placeholder method for logging in Favorite object
   end
 end
