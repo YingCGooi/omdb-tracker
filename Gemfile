@@ -16,6 +16,7 @@ group :production do
 end
 
 group :test do
-  gem 'rspec'
+  gem 'minitest'
+  gem 'minitest-reporters'
   gem 'rack-test'
 end
