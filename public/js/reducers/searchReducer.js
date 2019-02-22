@@ -7,23 +7,17 @@
 // }
 
 const initialState = {
-  "title": "Spider Man",
-  "year": "1978–1979",
-  "plot": "To fight against the evil Iron Cross Army, led by the space emperor Professor Monster, a daredevil motorcyclist transforms into the famous Marvel Superhero, with a racecar and giant ...",
-  "poster": "https://m.media-amazon.com/images/M/MV5BM2EwYzA2YjMtNDdhYi00OTI1LWE2ODUtOWViODk4YjRjNzVmXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
-  "imdbID": "tt0185116",
+  "title": "",
+  "year": "",
+  "plot": "",
+  "poster": "",
+  "imdbID": "",
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'UPDATE_SEARCH':
-      state = {
-        title: action.payload.Title,
-        year: action.payload.Year,
-        plot: action.payload.Plot,
-        poster: action.payload.Poster,
-        imdbID: action.payload.imdbID
-      }
+    case 'SEARCH_SUCCESS':
+      state = action.result;
       break;
       
     default: return state;

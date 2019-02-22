@@ -18,9 +18,12 @@
   },
   "homepage": "https://github.com/YingCGooi/alpha-take-home#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-redux": "^6.0.0",
+    "react-router-dom": "^4.3.1",
+    "redux-thunk": "^2.3.0",
     "webpack-cli": "^3.2.3"
   },
   "devDependencies": {

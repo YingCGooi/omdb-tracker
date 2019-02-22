@@ -87,6 +87,24 @@ span {
   font-weight: 400;
 }
 
+.flash {
+  position: fixed;
+  bottom: 60px;
+  margin: 0 auto;
+  padding: 15px;  
+  width: 80%;
+  max-width: 400px;
+  background: #4B55A1;
+  color: #FFFFFF;
+  font-weight: 400;
+  text-align: center;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.message {
+  text-align: center;
+}
+
 /*=========
   Top Nav
 =========*/
@@ -125,9 +143,12 @@ main {
     Search
 ============*/
 
-main form {
-  display: flex;
+.search {
   width: 100%;
+}
+
+.search > div {
+  display: flex;
 }
 
 label {
@@ -140,13 +161,13 @@ input {
   border: 1px solid #AAAAAA;
 }
 
-#search-container input {
+.search input {
   border-right: none;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;  
 }
 
-#search-container button[type='submit'] {
+.search button[type='submit'] {
   width: 50px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -157,9 +178,51 @@ button {
   padding: 8px;
 }
 
+p.error,
+span.error {
+  margin-top: 5px;
+  color: #EC6159;
+  font-weight: 400;
+}
+
+input.error {
+  border-color: #EC6159;
+}
+
+input:focus {
+  outline: 0;
+}
+
+.loading {
+  margin-top: 20px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 5px;
+}
+
+section.error {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
 /*============
     Movie
 ============*/
+#favorites-container .movie {
+  margin: 0;
+}
+
+#favorites-container li {
+  margin: 20px 0;
+}
+
+#favorites-container li:first-of-type {
+  margin-top: 0;
+}
 
 .movie img {
   display: block;
@@ -199,6 +262,10 @@ i.star {
   cursor: pointer;
 }
 
+.locked i.star {
+  cursor: default;
+}
+
 .bright {
   filter: brightness(110%);
 }
@@ -222,7 +289,8 @@ input[type='radio'] {
 }
 
 #add-favorite h2 {
-  font-weight: 400;
+  font-weight: 700;
+  padding: 10px 0;
 }
 
 #add-favorite {
@@ -264,4 +332,96 @@ fieldset {
 
 strong {
   font-weight: 700;
+}
+
+/*================
+   Media Queries
+================*/
+
+@media screen and (max-width: 800px) {
+  main {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  article {
+    flex-direction: column;
+  }
+
+  .poster {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .poster img {
+    display: block;
+    height: 300px;
+    width: auto;
+  }
+
+  div.info {
+    padding-left: 0 !important;
+  }
+
+  article h2 {
+    text-align: center;
+  }
+
+  h2 + p {
+    margin-top: 40px;
+  }
+
+  button.favorite,
+  button.remove {
+    display: block;
+    margin: 0 auto;
+  }
+
+  button.favorite {
+    margin-top: 20px;
+  }
+
+  #add-favorite {
+    left: 0;
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  #add-favorite .poster {
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  main {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  #add-favorite {
+    top: 50px;
+  }
+
+  #add-favorite h2 {
+    text-align: center;
+  }
+
+  #add-favorite .poster {
+    margin-bottom: 20px;
+  }
+
+  #add-favorite img {
+    height: 160px;
+    width: auto;    
+  }
+
+  #add-favorite form {
+    flex-direction: column;
+  }
+
+  fieldset {
+    padding-left: 0;
+  }
 }

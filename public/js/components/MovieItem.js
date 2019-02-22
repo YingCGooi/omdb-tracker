@@ -1,12 +1,12 @@
 import React from 'react';
 import FavoriteInfo from './FavoriteInfo';
 
-const MovieItem = ({ movie, isFavorite, handleFavoriteButtonClicked }) => (
+const MovieItem = ({ movie, ...props }) => (
   <article className='movie'>
     <div className='poster'>
       {
         (movie.poster === 'N/A')
-          ? <img src='http://via.placeholder.com/300x466' />
+          ? <img src='images/300x466.png' />
           : <img src={ movie.poster } />
       }
     </div>
@@ -16,15 +16,17 @@ const MovieItem = ({ movie, isFavorite, handleFavoriteButtonClicked }) => (
         <p>{ movie.plot }</p>
       </div>
       {
-        (isFavorite) 
+        (props.isFavorite) 
           ? <FavoriteInfo 
               rating={ movie.rating } 
-              comment={ movie.comment } 
-              imdbId={ movie.imdbID }
+              comment={ movie.comment }
+              editable={ props.editable }
+              onRate={ props.onRate }
+              onDelete={ props.onDelete }
             />
           : <button 
               className='favorite'
-              onClick={ handleFavoriteButtonClicked }
+              onClick={ props.handleFavoriteButtonClicked }
             >
               Add To Favorites
             </button> 

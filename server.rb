@@ -27,6 +27,10 @@ get '/' do
   send_file 'public/index.html', type: :html
 end
 
+get '/favorites' do
+  send_file 'public/index.html', type: :html
+end
+
 namespace '/api' do
   helpers do
     def extract_movie_params
@@ -73,14 +77,14 @@ namespace '/api' do
     title = params['title']
     client = OmdbClient.new
 
-    halt 400, 'title cannot be blank' if absent?(title)
+    halt 400, 'Title cannot be blank!' if absent?(title)
 
     begin
       data = client.query(title)
       json to_movie_object(data)
 
     rescue MovieNotFound
-      halt 404, "Movie not found on OMDb."
+      halt 404, 'Movie not found!'
 
     rescue InvalidAPIKey, Faraday::ConnectionFailed
       halt 500, 'The server is experiencing issues communicating with OMDb.'

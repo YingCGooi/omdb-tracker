@@ -13,17 +13,40 @@ class RatingForm extends React.Component {
     return 'grey star outline icon';
   }
 
+  handleMouseHover = (value) => {
+    if (!this.props.editable) return;
+    this.setState({ hoverStars: value });
+  }
+
+  handleMouseLeave = () => {
+    if (!this.props.editable) return;    
+    this.setState({ hoverStars: 0 });
+  }
+
+  handleRatingChanged = (event) => {
+    if (!this.props.editable) return;
+    this.props.onRate(event.target.value);
+  }
+
   render() {
+    let className = 'rating-form';
+    if (!this.props.editable) className += ' locked';
+
     return(
-      <div className='rating-form'>
+      <div className={ className }>
       {
         [1, 2, 3, 4, 5].map(value => (
           <label 
             key={value}
-            onMouseEnter={ () => this.setState({ hoverStars: value }) }
-            onMouseLeave={ () => this.setState({ hoverStars: 0 }) }
+            onMouseEnter={ () => this.handleMouseHover(value) }
+            onMouseLeave={ this.handleMouseLeave }
           >
-            <input type='radio' name='rating' value={ value } />
+            <input 
+              type='radio' 
+              name='rating' 
+              value={ value }
+              onChange={ this.handleRatingChanged }
+            />
             <i className={ this.starClassName(value) } />
           </label>
         ))
