@@ -5,10 +5,13 @@ const initialState = {
   saveFavoriteError: {},
   updateRating: '',
   updateRatingError: {},
+  deleteFavorite: '',
+  deleteFavoriteError: {}
 }
 
 export default (state = initialState, action) => {
   const actionHandlers = {
+    // search statuses
     'SEARCH_REQUEST': {
       search: 'PENDING',
       searchError: '',
@@ -21,7 +24,7 @@ export default (state = initialState, action) => {
       search: 'ERROR',
       searchError: action.error, 
     },
-
+    // save favorite statuses
     'SAVE_FAVORITE_SUCCESS': {
       saveFavorite: 'SUCCESS',
       saveFavoriteError: '',
@@ -30,23 +33,26 @@ export default (state = initialState, action) => {
       saveFavorite: 'ERROR',
       saveFavoriteError: action.error,
     },
-    'RESET_SAVE_FAVORITE': {
-      saveFavorite: '',
-      saveFavoriteError: '',
-    },
-
+    // update rating statuses
     'UPDATE_RATING_SUCCESS': {
       updateRating: 'SUCCESS',
       updateRatingError: '',
     },
     'UPDATE_RATING_FAILURE': {
       updateRating: 'ERROR',
-      updateRatingError: '',
+      updateRatingError: { errors: action.error },
     },
-    'RESET_UPDATE_RATING': {
-      updateRating: '',
-      updateRatingError: '',
-    }
+    // delete favorite statuses
+    'DELETE_FAVORITE_SUCCESS': {
+      deleteFavorite: 'SUCCESS',
+      deleteFavoriteError: '',
+    },
+    'DELETE_FAVORITE_FAILURE': {
+      deleteFavorite: 'ERROR',
+      deleteFavoriteError: { errors: 'Cannot delete movie' }
+    },
+    // reset statuses
+    'RESET_ALL_STATUS': initialState,
   }
 
   const statesToUpdate = actionHandlers[action.type];

@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import MovieItem from './MovieItem';
-import { getAll, updateRating } from '../actions/favoritesActions';
+import { getAll, updateRating, deleteFavorite } from '../actions/favoritesActions';
 
-const FavoritesContainer = ({ favorites, updateRating, delete }) => (
+const FavoritesContainer = ({ favorites, updateRating, deleteFavorite }) => (
   <main id='favorites-container'>
     <ul>
     {
@@ -15,7 +15,7 @@ const FavoritesContainer = ({ favorites, updateRating, delete }) => (
             isFavorite={true}
             editable={true}
             onRate={ (value) => updateRating(imdbID, value) }
-            onDelete={ () => delete(imdbID) }
+            onDelete={ () => deleteFavorite(imdbID) }
           />
         </li>
       ))
@@ -40,8 +40,8 @@ const mapDispatchToProps = (dispatch) => (
     updateRating(imdbID, value) {
       dispatch(updateRating(imdbID, value))
     },
-    delete(imdbID) {
-      dispatch(delete(imdbID))
+    deleteFavorite(imdbID) {
+      dispatch(deleteFavorite(imdbID))
     }
   }
 )

@@ -31,6 +31,11 @@ export default (state = initialState, action) => {
       state = Object.assign({}, state, action.favorite);
       break;
 
+    case 'DELETE_FAVORITE_SUCCESS':
+      state = Object.assign({}, state);
+      delete state[action.imdbID];
+      break;
+
     default: return state;
   }
   return state;
