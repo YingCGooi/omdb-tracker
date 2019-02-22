@@ -1,21 +1,23 @@
-const initialState = {
-  imdbID1: {
-    title: '',
-    year: '',
-    plot: '',
-    poster: '',
-    rating: '',
-    comment: '',
-  },
-  imdbID2: {
-    title: '',
-    year: '',
-    plot: '',
-    poster: '',
-    rating: '',
-    comment: '',    
-  }
-}
+// const initialState = {
+//   imdbID1: {
+//     title: '',
+//     year: '',
+//     plot: '',
+//     poster: '',
+//     rating: '',
+//     comment: '',
+//   },
+//   imdbID2: {
+//     title: '',
+//     year: '',
+//     plot: '',
+//     poster: '',
+//     rating: '',
+//     comment: '',    
+//   }
+// }
+
+const initialState = {};
 
 export default (state = initialState, action) => {
   switch (action.type) {
