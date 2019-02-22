@@ -8,7 +8,7 @@ Make sure to have PostgreSQL installed and running properly in your machine. Als
 
 1. Navigate to the root directory of the project.
 
-2. Create a new database named `'omdb_tracker'`:
+2. Create a new database named `omdb_tracker`:
 
 ```
 createdb omdb_tracker
@@ -41,7 +41,7 @@ This will start the Sinatra server at `localhost:4567`
 ## Testing
 Make sure that you complete the local installation.
 
-1. Create a test database named `'omdb_tracker_test'`
+1. Create a test database named `omdb_tracker_test`
 ```
 createdb omdb_tracker_test
 ```
@@ -60,7 +60,7 @@ bundle exec ruby test/api_test.rb
 ### Stack
 - Sinatra as backend API server
 - Postgres as RDBMS, connected via `pg` gem
-- React/Redux as frontend, bundled using `webpack`
+- React/Redux as frontend, bundled using Webpack
 - Raw CSS with icons from semantic-ui
 
 ### OMDb API Client
