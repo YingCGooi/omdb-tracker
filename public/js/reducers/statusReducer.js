@@ -1,10 +1,13 @@
 const initialState = {
   search: '',
   searchError: '',
+
   saveFavorite: '',
   saveFavoriteError: {},
+
   updateRating: '',
   updateRatingError: {},
+  
   deleteFavorite: '',
   deleteFavoriteError: {}
 }
