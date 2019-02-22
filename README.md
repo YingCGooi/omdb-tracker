@@ -8,7 +8,7 @@ Make sure to have PostgreSQL installed and running properly in your machine. Als
 
 1. Navigate to the root directory of the project.
 
-2. Create a new database named 'omdb_tracker':
+2. Create a new database named `'omdb_tracker'`:
 
 ```
 createdb omdb_tracker
@@ -37,6 +37,24 @@ bundle exec ruby server.rb
 This will start the Sinatra server at `localhost:4567`
 
 6. Navigate to `localhost:4567` in your browser to access the application.
+
+## Testing
+Make sure that you complete the local installation.
+
+1. Create a test database named `'omdb_tracker_test'`
+```
+createdb omdb_tracker_test
+```
+
+2. Import the sql schema to the test database
+```
+psql omdb_tracker_test < db/schema.sql
+```
+
+3. Run all tests
+```
+bundle exec ruby test/api_test.rb
+```
 
 ## Additional Notes
 ### Stack

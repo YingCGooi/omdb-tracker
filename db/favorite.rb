@@ -10,6 +10,8 @@ class Favorite
   def initialize(logger)
     @db = if Sinatra::Base.production?
             PG.connect(ENV['DATABASE_URL'])
+          elsif ENV['RACK_ENV'] == 'test'
+            PG.connect(dbname: ENV['TEST_DATABASE'])
           else
             PG.connect(dbname: DB_NAME)
           end
@@ -81,6 +83,10 @@ class Favorite
     result = query(sql, imdbID)
 
     result.cmd_tuples == 1
+  end
+
+  def destroy_all!
+    query('DELETE from favorites')
   end
 
   private
