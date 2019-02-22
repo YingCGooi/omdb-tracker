@@ -90,3 +90,7 @@ const favoritesList = {
 ```
 
 The advantage of using an object with imdbID as the key is that we can perform a lookup for a particular movie in O(1) time. This is efficient to determine whether or not a movie query result matches a movie in the favorites list.
+
+### `endyear` column
+When fetching data from OMDb, a movie's `year` value may contain a year range (for example: `1978–1979`).
+To conform to the schema of a `year` column to contain only four-digit year numbers `YYYY`, it makes sense to create a separate column `endyear` to store the ending year. When forming a response, the ending year is recombined with the starting year.
