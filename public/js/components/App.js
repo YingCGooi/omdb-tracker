@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 import SearchContainer from './SearchContainer';
 import FavoritesContainer from './FavoritesContainer';
 import AddFavoriteForm from './AddFavoriteForm';
-import { getAll } from '../actions/favoritesActions';
+import { 
+  resetSaveFavoriteStatus, 
+  resetUpdateRatingStatus, 
+  resetDeleteFavoriteStatus,
+  getAll 
+} from '../actions/favoritesActions';
 import {
   BrowserRouter as Router,
   Route,
@@ -30,23 +35,24 @@ class App extends React.Component {
     if (props.saveFavorite === 'SUCCESS') {
       this.flashMessage('Movie saved to favorites list!');
       this.hideForm();
+      props.resetSaveStatus();
     } 
     if (props.saveFavorite === 'ERROR') {
-      this.renderErrorFlash(props.saveError);    
+      this.renderErrorFlash(props.saveError);
+      props.resetSaveStatus();      
     }
     if (props.updateRating === 'SUCCESS') {
       this.flashMessage('Rating successfully updated!');
+      props.resetUpdateStatus();
     }
     if (props.updateRating === 'ERROR') {
-      this.renderErrorFlash({ errors: props.updateError });
+      this.renderErrorFlash(props.updateError);
+      props.resetUpdateStatus();
     }
     if (props.deleteFavorite === 'SUCCESS') {
       this.flashMessage('Movie removed from favorites list.');
+      props.resetDeleteStatus();
     }
-    if (props.deleteFavorite === 'FAILURE') {
-      this.flashMessage('Movie cannot be deleted, or not found.')
-    }
-    this.resetStatuses();
   }
 
   renderErrorFlash = (errorObj) => {
@@ -125,14 +131,20 @@ const mapStateToProps = (state) => (
     updateRating: state.status.updateRating,
     updateError: state.status.updateRatingError,
     deleteFavorite: state.status.deleteFavorite,
-    deleteFavoriteError: state.status.deleteFavoriteError
+    deleteFavoriteError: state.status.deleteFavoriteError,
   }
 )
 
 const mapDispatchToProps = (dispatch) => (
   {
-    resetStatuses() {
-      dispatch({ type: 'RESET_ALL_STATUS' })
+    resetSaveStatus() {
+      dispatch(resetSaveFavoriteStatus())
+    },
+    resetUpdateStatus() {
+      dispatch(resetUpdateRatingStatus())
+    },
+    resetDeleteStatus() {
+      dispatch(resetDeleteFavoriteStatus())
     },
     getAllFavorites() {
       dispatch(getAll())

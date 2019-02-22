@@ -9,6 +9,10 @@ export const saveFavoriteFailure = (error) => ({
   type: 'SAVE_FAVORITE_FAILURE', error
 });
 
+export const resetSaveFavoriteStatus = () => ({
+  type: 'RESET_SAVE_FAVORITE'
+});
+
 // get all favorites actions
 export const getAllSuccess = (favorites) => ({
   type: 'GET_FAVORITES_SUCCESS', favorites
@@ -27,6 +31,10 @@ export const updateRatingFailure = (error) => ({
   type: 'UPDATE_RATING_FAILURE', error
 });
 
+export const resetUpdateRatingStatus = () => ({
+  type: 'RESET_UPDATE_RATING'
+});
+
 // delete favorite actions
 export const deleteFavoriteSuccess = (imdbID) => ({
   type: 'DELETE_FAVORITE_SUCCESS', imdbID
@@ -36,6 +44,9 @@ export const deleteFavoriteError = () => ({
   type: 'DELETE_FAVORITE_FAILURE'
 });
 
+export const resetDeleteFavoriteStatus = () => ({
+  type: 'RESET_DELETE_FAVORITE'
+});
 
 // CRUD API call actions
 export function save(movie) {

@@ -33,6 +33,10 @@ export default (state = initialState, action) => {
       saveFavorite: 'ERROR',
       saveFavoriteError: action.error,
     },
+    'RESET_SAVE_FAVORITE': {
+      saveFavorite: '',
+      saveFavoriteError: '',
+    },
     // update rating statuses
     'UPDATE_RATING_SUCCESS': {
       updateRating: 'SUCCESS',
@@ -40,7 +44,11 @@ export default (state = initialState, action) => {
     },
     'UPDATE_RATING_FAILURE': {
       updateRating: 'ERROR',
-      updateRatingError: { errors: action.error },
+      updateRatingError: { error: action.error },
+    },
+    'RESET_UPDATE_RATING': {
+      updateRating: '',
+      updateRatingError: '',
     },
     // delete favorite statuses
     'DELETE_FAVORITE_SUCCESS': {
@@ -49,10 +57,12 @@ export default (state = initialState, action) => {
     },
     'DELETE_FAVORITE_FAILURE': {
       deleteFavorite: 'ERROR',
-      deleteFavoriteError: { errors: 'Cannot delete movie' }
+      deleteFavoriteError: { errors: action.error },
     },
-    // reset statuses
-    'RESET_ALL_STATUS': initialState,
+    'RESET_DELETE_FAVORITE': {
+      deleteFavorite: '',
+      deleteFavoriteError: '',
+    }
   }
 
   const statesToUpdate = actionHandlers[action.type];
