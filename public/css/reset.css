@@ -50,6 +50,9 @@ input,
 button {
   font-family: inherit;
 }
+em {
+  font-style: italic;
+}
 *,
 *:before,
 *:after {

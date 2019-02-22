@@ -11,6 +11,7 @@ const FavoriteInfo = (props) => (
       editable={ props.editable }
       onRate={ props.onRate }
     />
+    <span><em>{ props.editable ? ' (click to change)' : '' }</em></span>
     <p><span>Comment:</span> { props.comment }</p>
     {
       (props.editable)
