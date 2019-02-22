@@ -10,7 +10,7 @@ const FavoritesContainer = ({ favorites, updateRating }) => (
     {
       Object.keys(favorites).map(imdbID => (
         <li key={imdbID}>
-          <MovieItem 
+          <MovieItem
             movie={ favorites[imdbID] } 
             isFavorite={true}
             editable={true}
@@ -19,6 +19,11 @@ const FavoritesContainer = ({ favorites, updateRating }) => (
           />
         </li>
       ))
+    }
+    {
+      (Object.keys(favorites).length === 0)
+        ? <p className='message'>Favorite list empty.</p>
+        : null
     }
     </ul>
   </main>

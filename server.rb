@@ -27,6 +27,10 @@ get '/' do
   send_file 'public/index.html', type: :html
 end
 
+get '/favorites' do
+  send_file 'public/index.html', type: :html
+end
+
 namespace '/api' do
   helpers do
     def extract_movie_params

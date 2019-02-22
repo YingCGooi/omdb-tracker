@@ -9,10 +9,14 @@ import {
   resetUpdateRatingStatus, 
   getAll 
 } from '../actions/favoritesActions';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+} from 'react-router-dom';
 
 class App extends React.Component {
   state = {
-    showFavorites: false,
     showAddFavoriteForm: false,
     flashMessage: '' 
   }
@@ -26,90 +30,101 @@ class App extends React.Component {
   }
 
   componentDidUpdate = () => {
-    if (this.props.saveStatus === 'SUCCESS') {
-      this.renderFlashMessage('Movie saved to favorites list!');
+    const props = this.props;
+    if (props.saveFavorite === 'SUCCESS') {
+      this.flashMessage('Movie saved to favorites list!');
       this.hideForm();
-      this.props.resetSaveStatus();      
+      props.resetSaveStatus();      
     } 
-    if (this.props.saveStatus === 'ERROR') {
-      this.renderSaveError();
-      this.props.resetSaveStatus();      
+    if (props.saveFavorite === 'ERROR') {
+      this.renderErrorFlash(props.saveError);
+      props.resetSaveStatus();      
     }
-    if (this.props.updateStatus === 'SUCCESS') {
-      this.renderFlashMessage('Rating successfully updated!');
-      this.props.resetUpdateStatus();
+    if (props.updateRating === 'SUCCESS') {
+      this.flashMessage('Rating successfully updated!');
+      props.resetUpdateStatus();
+    }
+    if (props.updateRating === 'ERROR') {
+      this.renderErrorFlash({ errors: props.updateError });
+      props.resetUpdateStatus();
     }
   }
 
-  renderSaveError = () => {
-    const errorObj = this.props.saveError;
+  renderErrorFlash = (errorObj) => {
     const message = 
-      errorObj.errors.join(',') + " - " + errorObj.message;
-    this.renderFlashMessage(message);
+      errorObj.message + ' ' + errorObj.errors.join(',');
+    this.flashMessage(message);
   }
 
-  renderFlashMessage = (message) => {
+  flashMessage = (message) => {
     this.setState({ flashMessage: message });
     setTimeout(() => {
       this.setState({ flashMessage: '' });
-    }, 2000)
+    }, 2500)
   }
  
   render() {
+    const pathname = window.location.pathname;
+
     return (
-      <div id='app'>
-        <header>OMDb Movie Tracker</header>
-        <nav>
-          <a 
-            href='#'
-            onClick={() => this.setState({ showFavorites: false })}
-            className={ !this.state.showFavorites ? 'active' : '' }
-          >Search
-          </a>
-          <a 
-            href='#'
-            onClick={() => this.setState({ showFavorites: true })}
-            className={ this.state.showFavorites ? 'active' : '' }
-          >Favorites
-          </a>
-        </nav>
-        {
-          (this.state.showFavorites)
-            ? <FavoritesContainer />
-            : <SearchContainer 
-                handleFavoriteButtonClicked={ 
-                  () => this.setState({ showAddFavoriteForm: true }) 
-                }
-              />
-        }
-        {
-          (this.state.showAddFavoriteForm)
-            ? <div>
-                <div 
-                  className='overlay'
-                  onClick={ this.hideForm }
-                >
+      <Router>
+        <div id='app'>
+          <header>OMDb Movie Tracker</header>
+          <nav>
+            <Link 
+              to='/'
+              onClick={ () => this.forceUpdate() }
+              className={ pathname === '/' ? 'active' : '' }
+            >Search
+            </Link>
+            <Link 
+              to='/favorites'
+              onClick={ () => this.forceUpdate() }
+              className={ pathname === '/favorites' ? 'active' : '' }
+            >Favorites
+            </Link>
+          </nav>
+
+          <Route exact path='/' render={() => (
+            <SearchContainer 
+              handleFavoriteButtonClicked={ 
+                () => this.setState({ showAddFavoriteForm: true }) 
+              }
+            />
+          )} />
+          <Route exact path='/favorites' render={() => (
+            <FavoritesContainer />
+          )} />
+
+          {
+            (this.state.showAddFavoriteForm)
+              ? <div>
+                  <div 
+                    className='overlay'
+                    onClick={ this.hideForm }
+                  >
+                  </div>
+                  <AddFavoriteForm />
                 </div>
-                <AddFavoriteForm />
-              </div>
-            : null
-        }
-        { 
-          (this.state.flashMessage)
-            ? <p className='flash'>{ this.state.flashMessage }</p>
-            : null
-        }
-      </div>
+              : null
+          }
+          { 
+            (this.state.flashMessage)
+              ? <p className='flash'>{ this.state.flashMessage }</p>
+              : null
+          }
+        </div>
+      </Router>
     )
   }
 }
 
 const mapStateToProps = (state) => (
   {
-    saveStatus: state.status.saveFavorite,
+    saveFavorite: state.status.saveFavorite,
     saveError: state.status.saveFavoriteError,
-    updateStatus: state.status.updateRating,
-    updateStatusError: state.status.updateRatingError,
+    updateRating: state.status.updateRating,
+    updateError: state.status.updateRatingError,
   }
 )
 
