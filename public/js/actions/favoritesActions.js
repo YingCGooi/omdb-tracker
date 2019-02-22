@@ -39,7 +39,7 @@ export const resetUpdateRatingStatus = () => ({
 
 export function save(movie) {
   return (dispatch) => {
-    apiClient.save(movie)
+    apiClient.saveFavorite(movie)
       .then(res => {
         dispatch(saveFavoriteSuccess(res.data))
       })
@@ -70,5 +70,17 @@ export function updateRating(imdbId, value) {
       .catch(err => {
         dispatch(updateRatingFailure(err.response.data))
       });
+  }
+}
+
+export function delete(imdbId) {
+  return (dispatch) => {
+    apiClient.deleteFavorite(imdbId)
+      .then(res => {
+        dispatch(deleteFavoriteSuccess())
+      })
+      .catch(err => {
+        dispatch(deleteFavoriteFailure(err.response.data))
+      })
   }
 }

@@ -10,7 +10,7 @@ const apiClient = {
     return axios.get(SEARCH_URL(title));
   },
 
-  save(movie) {
+  saveFavorite(movie) {
     return axios.post(FAVORITES_URL, movie);
   },
 
@@ -22,7 +22,11 @@ const apiClient = {
     return axios.patch(FAVORITE_URL(imdbID), {
       rating: value,
     });
-  }
+  },
+
+  deleteFavorite(imdbID) {
+    return axios.delete(FAVORITE_URL(imdbID));
+  },
 }
 
 window.apiClient = apiClient;
