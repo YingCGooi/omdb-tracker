@@ -362,6 +362,10 @@ strong {
     margin-bottom: 40px;
   }
 
+  #add-favorite .poster {
+    display: block;
+  }
+
   .poster img {
     display: block;
     height: 300px;
@@ -417,6 +421,7 @@ strong {
   }
 
   #add-favorite .poster {
+    display: flex;
     margin-bottom: 20px;
   }
 
