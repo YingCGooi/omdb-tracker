@@ -311,11 +311,19 @@ input[type='radio'] {
 }
 
 #add-favorite img {
-  height: 200px;
+  height: auto;
+  width: 150px;
 }
 
 #comment {
   width: 100%;
+  font-family: inherit;
+  padding: 6px;
+  resize: none;
+}
+
+#comment.error {
+  border: 1px solid #EC6159;
 }
 
 fieldset {
