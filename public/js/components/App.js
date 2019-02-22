@@ -50,7 +50,11 @@ class App extends React.Component {
       props.resetUpdateStatus();
     }
     if (props.deleteFavorite === 'SUCCESS') {
-      this.flashMessage('Movie removed from favorites list.');
+      this.flashMessage('Removed movie from favorites list.');
+      props.resetDeleteStatus();
+    }
+    if (props.deleteFavorite === 'ERROR') {
+      this.flashMessage('Movie cannot be deleted or does not exist.')
       props.resetDeleteStatus();
     }
   }
