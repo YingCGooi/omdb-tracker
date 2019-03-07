@@ -1,4 +1,4 @@
-# Alpha Take Home Assignment - OMDb Movie Tracker
+# OMDb Movie Tracker
 
 ## Demo
 To skip installation and view the app, navigate to https://omdb-tracker.herokuapp.com/.
