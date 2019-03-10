@@ -1,4 +1,4 @@
-ENV['RACK_ENV'] = 'test'
+ ENV['RACK_ENV'] = 'test'
 ENV['TEST_DATABASE'] = 'omdb_tracker_test'
 
 require 'minitest/autorun'
